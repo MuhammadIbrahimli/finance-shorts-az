@@ -1,0 +1,19 @@
+{
+  "mode": "tiktok_channels",
+  "schedule_local_time": "10:00",
+  "channel_brand": "daxilde",
+  "rules_file": "channels/daxilde/AGENTS.md",
+  "tiktok_handles": [
+    "psy.traps",
+    "omenyxhorror",
+    "neotaumiel",
+    "mozg.znaet",
+    "psychoglowingrus",
+    "mind_renewall",
+    "svarkaskeleton",
+    "svarkahealth",
+    "dobryj_doctor"
+  ],
+  "pick": "random_channel_daily_then_most_viewed_unused_video",
+  "status": "video_listing_source_not_implemented"
+}
