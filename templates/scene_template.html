@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<style>
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #0b1020; }
+  #stage { position: relative; width: 1080px; height: 1920px; font-family: "Inter", "Noto Sans", "Segoe UI", Arial, sans-serif; color: #fff; }
+  .title { position: absolute; left: 80px; right: 80px; top: 300px; font-size: 96px; font-weight: 800; line-height: 1.05; opacity: 0; }
+</style>
+</head>
+<body>
+<!--
+  Scene contract used by scripts/render.py:
+  - window.DURATION_SEC  : total length in seconds (must match work/narration_trim.wav)
+  - window.setTime(t)    : draw the frame for time t (seconds). Must be a pure function of t,
+                           no requestAnimationFrame loops and no Math.random() without a seed.
+  Replace the placeholder content below with the storyboard from the vizavi-motion skill.
+-->
+<div id="stage">
+  <div class="title" id="t1">Placeholder</div>
+</div>
+<script>
+  window.DURATION_SEC = 40;
+
+  // Simple easing helper: returns 0..1 progress of t within [start, end].
+  function seg(t, start, end) { return Math.min(1, Math.max(0, (t - start) / (end - start))); }
+  function easeOut(p) { return 1 - Math.pow(1 - p, 3); }
+
+  window.setTime = function (t) {
+    const el = document.getElementById("t1");
+    const p = easeOut(seg(t, 0.5, 1.5));
+    el.style.opacity = p;
+    el.style.transform = `translateY(${(1 - p) * 40}px)`;
+  };
+  window.setTime(0);
+</script>
+</body>
+</html>
