@@ -1,0 +1,14 @@
+{
+  "_how_to_fill": "Вставляйте ссылки на конкретные TikTok-видео (вида https://www.tiktok.com/@handle/video/<id>) в список нужного канала. views — число просмотров, которое вы видите на странице видео (можно примерно). Видео с уже использованным id пропускаются автоматически. Каналы без непубликованных ссылок в день запуска пропускаются.",
+  "channels": {
+    "psy.traps": [],
+    "omenyxhorror": [],
+    "neotaumiel": [],
+    "mozg.znaet": [],
+    "psychoglowingrus": [],
+    "mind_renewall": [],
+    "svarkaskeleton": [],
+    "svarkahealth": [],
+    "dobryj_doctor": []
+  }
+}

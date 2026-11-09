@@ -25,6 +25,7 @@ VIDIQ_POLL = "mcp__claude_ai_vidIQ__vidiq_job_poll"
 CANDIDATE_MAX_AGE_DAYS = 31
 
 STEPS: dict[str, list[str]] = {
+    "pick_channel": [PY, "scripts/pick_channel.py"],
     "transcript": [PY, "scripts/transcript.py"],
     "tts": [PY, "scripts/tts.py"],
     "trim": [PY, "scripts/trim.py"],
