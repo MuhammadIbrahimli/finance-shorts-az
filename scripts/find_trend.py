@@ -50,6 +50,24 @@ def parse_duration(iso: str) -> int:
     return h * 3600 + mins * 60 + s
 
 
+TRANSCRIPT_LANGS = ["en", "ru", "tr", "az"]
+
+
+def has_transcript(video_id: str) -> bool:
+    """True if YouTube has captions in a language the pipeline can use.
+
+    Without this check the top video can have no usable text: the pipeline would fail at
+    the transcript step and the video would already be marked as used.
+    """
+    from youtube_transcript_api import YouTubeTranscriptApi
+
+    try:
+        YouTubeTranscriptApi().list(video_id).find_transcript(TRANSCRIPT_LANGS)
+        return True
+    except Exception:  # no captions, disabled, blocked, etc.
+        return False
+
+
 def search_ids(api_key: str, published_after: str) -> set[str]:
     ids: set[str] = set()
     for query in QUERIES:
@@ -105,6 +123,7 @@ def main() -> None:
         fail("Нет новых кандидатов: все найденные видео уже в used.json. Расширьте QUERIES.")
 
     best = None
+    ranked: list[dict] = []
     for item in video_details(api_key, sorted(candidates)):
         vid = item["id"]
         published = datetime.strptime(
@@ -114,8 +133,7 @@ def main() -> None:
         if published < cutoff or duration > MAX_DURATION_SEC:
             continue
         views = int(item.get("statistics", {}).get("viewCount", 0))
-        if best is None or views > best["view_count"]:
-            best = {
+        ranked.append({
                 "video_id": vid,
                 "url": f"https://www.youtube.com/shorts/{vid}",
                 "title": item["snippet"]["title"],
@@ -124,7 +142,15 @@ def main() -> None:
                 "duration_sec": duration,
                 "view_count": views,
                 "description": item["snippet"].get("description", ""),
-            }
+        })
+
+    # Most viewed first; take the first one that has usable captions.
+    ranked.sort(key=lambda r: r["view_count"], reverse=True)
+    for cand in ranked:
+        if has_transcript(cand["video_id"]):
+            best = cand
+            break
+        print(f"Пропущено (нет субтитров en/ru/tr/az): {cand['video_id']}")
 
     if best is None:
         fail("Нет подходящих Shorts (≤90 с, не старше 14 дней, не использованных).")
