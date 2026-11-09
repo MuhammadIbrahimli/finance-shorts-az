@@ -87,6 +87,21 @@ def align(script_tokens: list[str], rec: list[dict]) -> list[int | None]:
     return matches
 
 
+MIN_WORD = 0.15  # seconds: shorter highlights are not visible at 24 fps
+MAX_WORD = 0.9   # seconds: longer ones usually mean an interpolated word
+
+
+def enforce_timings(words: list[dict]) -> list[dict]:
+    """Make word timings sequential, non-overlapping and within [MIN_WORD, MAX_WORD]."""
+    prev_end = 0.0
+    for w in words:
+        start = max(w["s"], prev_end)
+        end = min(max(w["e"], start + MIN_WORD), start + MAX_WORD)
+        w["s"], w["e"] = round(start, 3), round(end, 3)
+        prev_end = end
+    return words
+
+
 def main() -> None:
     ensure_work_dir()
     script = load_json(SCRIPT_FILE, {})
@@ -123,7 +138,7 @@ def main() -> None:
         for n in range(run_start, run_end):
             times[n] = (gap_start + step * (n - run_start), gap_start + step * (n - run_start + 1))
 
-    words = [{"w": tok, "s": round(s, 3), "e": round(e, 3)} for tok, (s, e) in zip(tokens, times)]
+    words = enforce_timings([{"w": tok, "s": s, "e": e} for tok, (s, e) in zip(tokens, times)])
     save_json(WORDS_FILE, words)
     save_json(WORDS_FILE.with_name("align_report.json"),
               {"tokens": len(tokens), "recognised": len(rec), "unmatched": unmatched})
