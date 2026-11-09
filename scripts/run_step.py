@@ -39,7 +39,12 @@ CLAUDE_STEPS: dict[str, tuple[str, str]] = {
     "tiktok_source_text": ("prompts/tiktok_source_text.md", f"{VIDIQ_WATCH},{VIDIQ_POLL}"),
     "creative_script": ("prompts/creative_script.md", ""),
     "creative_scene": ("prompts/creative_scene.md", ""),
+    # Channel mode (TikTok source): Daxilde rules.
+    "channel_script": ("prompts/channel_script.md", ""),
+    "channel_scene": ("prompts/channel_scene.md", ""),
 }
+# Steps that have a channel-mode version: used when work/trend.json comes from TikTok.
+CHANNEL_VARIANT = {"creative_script": "channel_script", "creative_scene": "channel_scene"}
 
 
 def run(cmd: list[str], stdin_text: str | None = None) -> tuple[int, str]:
@@ -90,6 +95,8 @@ def main() -> int:
     step = sys.argv[1]
     ensure_work_dir()
 
+    if step in CHANNEL_VARIANT and load_json(TREND_FILE, {}).get("source", "").startswith("tiktok"):
+        step = CHANNEL_VARIANT[step]  # channel mode: Daxilde prompts
     if step in CLAUDE_STEPS:
         prompt_file, tools = CLAUDE_STEPS[step]
         prompt = (ROOT / prompt_file).read_text(encoding="utf-8")
