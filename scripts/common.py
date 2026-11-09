@@ -29,10 +29,14 @@ VIDEO_FILE = WORK / "video.mp4"
 def load_local_env() -> None:
     """Load KEY=VALUE pairs from a local env file into os.environ (never overrides real env vars).
 
-    Lookup order: $FINANCE_SHORTS_ENV, then ROOT/.env. In the cloud routine the variables
+    Lookup order: $FINANCE_SHORTS_ENV, then ~/.finance-shorts.env, then ROOT/.env. In the cloud routine the variables
     are set in the routine settings and this file does not exist.
     """
-    candidates = [os.environ.get("FINANCE_SHORTS_ENV", ""), str(ROOT / ".env")]
+    candidates = [
+        os.environ.get("FINANCE_SHORTS_ENV", ""),
+        str(Path.home() / ".finance-shorts.env"),
+        str(ROOT / ".env"),
+    ]
     for raw in candidates:
         if not raw:
             continue

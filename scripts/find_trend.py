@@ -1,6 +1,15 @@
-"""Find the most-viewed finance YouTube Shorts from the last 14 days that are not in used.json.
+"""Find an animated, general-audience finance Short from a channel that is about a month old.
 
-Writes the chosen video to work/trend.json and adds its id to used.json.
+Criteria (owner's brief):
+- the CHANNEL was created at most CHANNEL_MAX_AGE_DAYS ago (a new channel);
+- the video was published at most VIDEO_MAX_AGE_DAYS ago;
+- the video is animated (title or description says so) and is finance education or
+  stories for a general audience, not market news;
+- news-style videos are excluded by keyword;
+- length <= 90 s, captions usable (en/ru/tr/az), not already in used.json.
+Among the matches the most-viewed one is chosen.
+
+Writes work/trend.json and adds the video id to used.json (unless --dry-run).
 Requires: YOUTUBE_API_KEY (YouTube Data API v3).
 """
 from __future__ import annotations
@@ -11,17 +20,33 @@ from datetime import datetime, timedelta, timezone
 
 import requests
 
-from common import (
-    TREND_FILE,
-    USED_FILE,
-    ensure_work_dir,
-    fail,
-    load_json,
-    require_env,
-    save_json,
-)
+from common import TREND_FILE, USED_FILE, ensure_work_dir, fail, load_json, require_env, save_json
 
 API = "https://www.googleapis.com/youtube/v3"
+CHANNEL_MAX_AGE_DAYS = 31
+VIDEO_MAX_AGE_DAYS = 31
+MAX_DURATION_SEC = 90
+TRANSCRIPT_LANGS = ["en", "ru", "tr", "az"]
+
+# Animated, educational/story finance for a general audience.
+QUERIES = [
+    "animated money story for beginners",
+    "animated personal finance explained",
+    "2D animation how money works",
+    "animated budgeting story",
+    "animated investing for beginners",
+    "cartoon explains saving money",
+    "animated financial literacy",
+    "animated debt explained story",
+]
+# Required: the title or description shows that the video is animated.
+ANIMATION_RE = re.compile(
+    r"animat|cartoon|2d|motion graphic|whiteboard|animasiya|анимац|мультик", re.IGNORECASE)
+# Excluded: news and market-report style.
+NEWS_RE = re.compile(
+    r"\bnews\b|breaking|crash|today|this week|live\b|market update|daily update|xəbər|"
+    r"новост|сегодня|обвал|рынок сегодня|прогноз на",
+    re.IGNORECASE)
 
 
 def get(url: str, params: dict) -> requests.Response:
@@ -30,15 +55,6 @@ def get(url: str, params: dict) -> requests.Response:
         return requests.get(url, params=params, timeout=30)
     except requests.RequestException as exc:
         fail(f"YouTube API: сетевая ошибка {type(exc).__name__}")
-QUERIES = [
-    "personal finance tips",
-    "investing for beginners",
-    "money saving tips",
-    "stock market explained",
-    "budgeting tips",
-]
-MAX_DURATION_SEC = 90
-MAX_AGE_DAYS = 14
 
 
 def parse_duration(iso: str) -> int:
@@ -50,62 +66,62 @@ def parse_duration(iso: str) -> int:
     return h * 3600 + mins * 60 + s
 
 
-TRANSCRIPT_LANGS = ["en", "ru", "tr", "az"]
+def parse_ts(value: str) -> datetime:
+    """YouTube timestamps may or may not have fractional seconds."""
+    return datetime.fromisoformat(value.replace("Z", "+00:00")).astimezone(timezone.utc)
 
 
 def has_transcript(video_id: str) -> bool:
-    """True if YouTube has captions in a language the pipeline can use.
-
-    Without this check the top video can have no usable text: the pipeline would fail at
-    the transcript step and the video would already be marked as used.
-    """
+    """True if YouTube has captions in a language the pipeline can use."""
     from youtube_transcript_api import YouTubeTranscriptApi
 
     try:
         YouTubeTranscriptApi().list(video_id).find_transcript(TRANSCRIPT_LANGS)
         return True
-    except Exception:  # no captions, disabled, blocked, etc.
+    except Exception:  # no captions, captions disabled, blocked, etc.
         return False
 
 
-def search_ids(api_key: str, published_after: str) -> set[str]:
+def search_video_ids(api_key: str, published_after: str) -> set[str]:
     ids: set[str] = set()
     for query in QUERIES:
-        resp = get(
-            f"{API}/search",
-            params={
-                "key": api_key,
-                "part": "id",
-                "type": "video",
-                "videoDuration": "short",
-                "q": query,
-                "order": "viewCount",
-                "publishedAfter": published_after,
-                "maxResults": 50,
-            },
-        )
+        resp = get(f"{API}/search", params={
+            "key": api_key, "part": "id", "type": "video", "videoDuration": "short",
+            "q": query, "order": "viewCount", "publishedAfter": published_after,
+            "relevanceLanguage": "en", "maxResults": 50,
+        })
         if resp.status_code != 200:
             fail(f"YouTube search.list вернул {resp.status_code}: {resp.text[:300]}")
-        ids.update(item["id"]["videoId"] for item in resp.json().get("items", []))
+        ids.update(item["id"]["videoId"] for item in resp.json().get("items", []) if "videoId" in item["id"])
     return ids
 
 
 def video_details(api_key: str, ids: list[str]) -> list[dict]:
     results: list[dict] = []
     for i in range(0, len(ids), 50):
-        chunk = ids[i : i + 50]
-        resp = get(
-            f"{API}/videos",
-            params={
-                "key": api_key,
-                "part": "snippet,statistics,contentDetails",
-                "id": ",".join(chunk),
-            },
-        )
+        resp = get(f"{API}/videos", params={
+            "key": api_key, "part": "snippet,statistics,contentDetails",
+            "id": ",".join(ids[i:i + 50]),
+        })
         if resp.status_code != 200:
             fail(f"YouTube videos.list вернул {resp.status_code}: {resp.text[:300]}")
         results.extend(resp.json().get("items", []))
     return results
+
+
+def channel_created(api_key: str, channel_ids: list[str]) -> dict[str, datetime]:
+    """Map channel id -> channel creation time (snippet.publishedAt)."""
+    created: dict[str, datetime] = {}
+    ids = sorted(channel_ids)
+    for i in range(0, len(ids), 50):
+        resp = get(f"{API}/channels", params={
+            "key": api_key, "part": "snippet", "id": ",".join(ids[i:i + 50]),
+        })
+        if resp.status_code != 200:
+            fail(f"YouTube channels.list вернул {resp.status_code}: {resp.text[:300]}")
+        for ch in resp.json().get("items", []):
+            created[ch["id"]] = parse_ts(ch["snippet"]["publishedAt"])
+    return created
 
 
 def main() -> None:
@@ -114,49 +130,62 @@ def main() -> None:
     ensure_work_dir()
 
     now = datetime.now(timezone.utc)
-    published_after = (now - timedelta(days=MAX_AGE_DAYS)).strftime("%Y-%m-%dT%H:%M:%SZ")
-    cutoff = now - timedelta(days=MAX_AGE_DAYS)
+    published_after = (now - timedelta(days=VIDEO_MAX_AGE_DAYS)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    channel_cutoff = now - timedelta(days=CHANNEL_MAX_AGE_DAYS)
+    video_cutoff = now - timedelta(days=VIDEO_MAX_AGE_DAYS)
 
     used = set(load_json(USED_FILE, {"used": []}).get("used", []))
-    candidates = search_ids(api_key, published_after) - used
-    if not candidates:
-        fail("Нет новых кандидатов: все найденные видео уже в used.json. Расширьте QUERIES.")
+    candidate_ids = search_video_ids(api_key, published_after) - used
+    if not candidate_ids:
+        fail("Нет кандидатов в поиске. Расширьте QUERIES или проверьте used.json.")
 
-    best = None
+    videos = video_details(api_key, sorted(candidate_ids))
+    created = channel_created(api_key, [v["snippet"]["channelId"] for v in videos])
+
     ranked: list[dict] = []
-    for item in video_details(api_key, sorted(candidates)):
-        vid = item["id"]
-        published = datetime.strptime(
-            item["snippet"]["publishedAt"], "%Y-%m-%dT%H:%M:%SZ"
-        ).replace(tzinfo=timezone.utc)
+    for item in videos:
+        snip = item["snippet"]
+        text = f"{snip.get('title', '')}\n{snip.get('description', '')}"
+        published = parse_ts(snip["publishedAt"])
         duration = parse_duration(item["contentDetails"]["duration"])
-        if published < cutoff or duration > MAX_DURATION_SEC:
+        channel_id = snip["channelId"]
+        if published < video_cutoff or duration > MAX_DURATION_SEC:
             continue
-        views = int(item.get("statistics", {}).get("viewCount", 0))
+        if channel_id not in created or created[channel_id] < channel_cutoff:
+            continue  # the channel is older than a month
+        if not ANIMATION_RE.search(text):
+            continue  # not animated
+        if NEWS_RE.search(text):
+            continue  # news / market-report style
         ranked.append({
-                "video_id": vid,
-                "url": f"https://www.youtube.com/shorts/{vid}",
-                "title": item["snippet"]["title"],
-                "channel": item["snippet"]["channelTitle"],
-                "published_at": item["snippet"]["publishedAt"],
-                "duration_sec": duration,
-                "view_count": views,
-                "description": item["snippet"].get("description", ""),
+            "video_id": item["id"],
+            "url": f"https://www.youtube.com/shorts/{item['id']}",
+            "title": snip["title"],
+            "channel": snip["channelTitle"],
+            "channel_id": channel_id,
+            "channel_created_at": created[channel_id].isoformat(),
+            "published_at": snip["publishedAt"],
+            "duration_sec": duration,
+            "view_count": int(item.get("statistics", {}).get("viewCount", 0)),
+            "description": snip.get("description", ""),
         })
 
-    # Most viewed first; take the first one that has usable captions.
+    if not ranked:
+        fail("Нет анимированных финансовых Shorts от каналов не старше 31 дня (после фильтров).")
+
     ranked.sort(key=lambda r: r["view_count"], reverse=True)
+    best = None
     for cand in ranked:
         if has_transcript(cand["video_id"]):
             best = cand
             break
         print(f"Пропущено (нет субтитров en/ru/tr/az): {cand['video_id']}")
-
     if best is None:
-        fail("Нет подходящих Shorts (≤90 с, не старше 14 дней, не использованных).")
+        fail("Подходящих видео с субтитрами не найдено.")
 
     if dry_run:
-        print(f"[dry-run] {best['url']} | {best['view_count']} просмотров | {best['title']}")
+        print(f"[dry-run] {best['url']} | {best['view_count']} просмотров | канал {best['channel']} "
+              f"создан {best['channel_created_at'][:10]} | {best['title']}")
         return
     save_json(TREND_FILE, best)
     used.add(best["video_id"])
