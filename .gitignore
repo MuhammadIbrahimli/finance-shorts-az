@@ -1,4 +1,8 @@
+# Secrets: never commit. Keep them in the routine's environment or in a local file outside the repo.
+.env
+*.env
+telegram.env
+# Per-run working files
 work/
 __pycache__/
 *.pyc
-.env

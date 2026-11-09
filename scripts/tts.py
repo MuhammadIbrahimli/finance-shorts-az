@@ -49,12 +49,15 @@ def request_audio(api_key: str, model: str, voice: str, text: str) -> tuple[byte
         },
     }
     for attempt in range(4):
-        resp = requests.post(
-            ENDPOINT.format(model=model),
-            headers={"x-goog-api-key": api_key, "Content-Type": "application/json"},
-            json=body,
-            timeout=180,
-        )
+        try:
+            resp = requests.post(
+                ENDPOINT.format(model=model),
+                headers={"x-goog-api-key": api_key, "Content-Type": "application/json"},
+                json=body,
+                timeout=180,
+            )
+        except requests.RequestException as exc:
+            fail(f"Gemini TTS: сетевая ошибка {type(exc).__name__}")
         if resp.status_code in (429, 500, 503) and attempt < 3:
             time.sleep(5 * (attempt + 1))
             continue

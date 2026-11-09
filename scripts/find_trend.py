@@ -6,6 +6,7 @@ Requires: YOUTUBE_API_KEY (YouTube Data API v3).
 from __future__ import annotations
 
 import re
+import sys
 from datetime import datetime, timedelta, timezone
 
 import requests
@@ -21,6 +22,14 @@ from common import (
 )
 
 API = "https://www.googleapis.com/youtube/v3"
+
+
+def get(url: str, params: dict) -> requests.Response:
+    """GET wrapper: the API key sits in the query string, so never let an exception print the URL."""
+    try:
+        return requests.get(url, params=params, timeout=30)
+    except requests.RequestException as exc:
+        fail(f"YouTube API: сетевая ошибка {type(exc).__name__}")
 QUERIES = [
     "personal finance tips",
     "investing for beginners",
@@ -44,7 +53,7 @@ def parse_duration(iso: str) -> int:
 def search_ids(api_key: str, published_after: str) -> set[str]:
     ids: set[str] = set()
     for query in QUERIES:
-        resp = requests.get(
+        resp = get(
             f"{API}/search",
             params={
                 "key": api_key,
@@ -56,7 +65,6 @@ def search_ids(api_key: str, published_after: str) -> set[str]:
                 "publishedAfter": published_after,
                 "maxResults": 50,
             },
-            timeout=30,
         )
         if resp.status_code != 200:
             fail(f"YouTube search.list вернул {resp.status_code}: {resp.text[:300]}")
@@ -68,14 +76,13 @@ def video_details(api_key: str, ids: list[str]) -> list[dict]:
     results: list[dict] = []
     for i in range(0, len(ids), 50):
         chunk = ids[i : i + 50]
-        resp = requests.get(
+        resp = get(
             f"{API}/videos",
             params={
                 "key": api_key,
                 "part": "snippet,statistics,contentDetails",
                 "id": ",".join(chunk),
             },
-            timeout=30,
         )
         if resp.status_code != 200:
             fail(f"YouTube videos.list вернул {resp.status_code}: {resp.text[:300]}")
@@ -84,6 +91,7 @@ def video_details(api_key: str, ids: list[str]) -> list[dict]:
 
 
 def main() -> None:
+    dry_run = "--dry-run" in sys.argv
     api_key = require_env("YOUTUBE_API_KEY")
     ensure_work_dir()
 
@@ -121,6 +129,9 @@ def main() -> None:
     if best is None:
         fail("Нет подходящих Shorts (≤90 с, не старше 14 дней, не использованных).")
 
+    if dry_run:
+        print(f"[dry-run] {best['url']} | {best['view_count']} просмотров | {best['title']}")
+        return
     save_json(TREND_FILE, best)
     used.add(best["video_id"])
     save_json(USED_FILE, {"used": sorted(used)})
