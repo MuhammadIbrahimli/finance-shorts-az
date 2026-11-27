@@ -1,25 +1,25 @@
-# Динамическая раскадровка
+# Dynamic Storyboarding
 
-Нужна до реализации полного ролика. Она переводит простую идею в выполнимую постановку и сохраняет три механики ядра.
+Create this before producing the full video. It turns a simple idea into a feasible production plan and preserves the three core mechanics.
 
-1. Извлеки из брифа цель, зрителя, ключевую мысль, обязательный текст, формат, длительность, звук, допустимые ресурсы и выходные файлы. Неизвестные реальные сведения не выдумывай; обратимые творческие решения прими сам.
-2. Сформулируй единую нить: что действует, что меняется, какую мысль доказывает результат. Это может быть изменение материала, передача движения, причинная цепочка, развёртывание пространства или другой оригинальный способ. Не копируй последовательность прежнего ролика под новым названием.
-3. Для каждой сцены дай 3–5 коротких вариантов, различающихся действием, композицией/пространством, метафорой или переходом. Замена цвета и шрифта сама по себе не новый вариант. Выбери сильнейший для общего развития; покажи итог выбора и краткую практическую причину без раскрытия внутреннего рассуждения.
-4. Заполни сториборд всех сцен и стыков, затем проверь время восприятия и риски. Это рабочий план, не обязательная очередь пользовательских согласований. Если промежуточное одобрение прямо запрошено, соблюдай его границу.
+1. Extract the brief's goal, audience, key message, required text, format, duration, audio, allowed resources, and deliverable files. Do not invent unknown real-world facts; make reversible creative decisions yourself.
+2. Form one coherent through-line: what acts, what changes, and what idea the result demonstrates. This might be a material change, transfer of motion, causal chain, unfolding space, or another original approach. Do not reuse a previous video's sequence under a new title.
+3. For each scene, give 3–5 short options that differ meaningfully in action, composition/space, metaphor, or transition. Changing only color or font is not a new option. Choose the strongest direction for the whole piece and show the decision with a brief practical reason, without exposing private reasoning.
+4. Complete the storyboard for every scene and transition, then check viewing time and risks. This is a working plan, not a required sequence of user approvals. If the user explicitly requests intermediate approval, honor that boundary.
 
-## Карточка плана
+## Shot card
 
-| Поле | Что зафиксировать |
+| Field | What to record |
 |---|---|
-| Время и смысл | Интервал, главный акцент, роль в общей истории |
-| Состояния и действие | Что было, что запускает изменение, что делает герой, реакция, результат |
-| Пространство | Композиция, передний/средний/задний планы, свет, материал |
-| Текст | Точная фраза, действие букв/слов, окно чтения |
-| Камера и оптика | Путь, цель, поворот/скорость, крупность, фокус и blur |
-| Связи | Вход из предыдущего плана, носитель перехода, выход в следующий |
-| Звук | Музыкальный такт, SFX и синхронное событие либо explicit silent |
-| Проверка | Главный риск, фактический способ проверки, допустимый технический запасной путь |
+| Time and meaning | Interval, main emphasis, role in the overall story |
+| States and action | What existed, what triggers change, what the character does, reaction, result |
+| Space | Composition, foreground/midground/background, light, material |
+| Text | Exact phrase, movement of letters/words, reading window |
+| Camera and optics | Path, target, angle/speed, shot size, focus and blur |
+| Connections | Entry from previous shot, transition carrier, exit to next |
+| Sound | Musical beat, SFX, and synced event, or explicitly silent |
+| Review | Main risk, actual review method, acceptable technical fallback |
 
-Проектируй переход вместе с обеими сценами. Для match cut согласуй проекционный силуэт, масштаб, ориентацию и направление движения. Для маски следующая сцена должна действительно появляться внутри неё; случайный overlay после готовой склейки не доказывает такой переход. При единой локации сохраняй её позы, перспективу, свет и скорости; раскрытие объекта связывай с реальным перекрытием/действием.
+Design a transition together with both connected scenes. For a match cut, align projected silhouette, scale, orientation, and motion direction. With a mask, the next scene must actually appear inside it; a random overlay after a completed cut is not evidence of that transition. In one continuous location, preserve poses, perspective, lighting, and speeds; connect reveals of objects to real occlusion or action.
 
-Перед полной сборкой проверь один показательный риск в реальном качестве и движении, со звуком при его наличии. Длину пробы выбирай по восприятию и брифу; не втискивай все события в обязательные 5–7 секунд. Не заменяй пробой ни всю раскадровку, ни итерацию после полной сборки.
+Before full production, test one representative risk at delivery quality, in motion, and with sound if present. Choose a test length that suits the brief and viewing experience; do not force every event into a mandatory 5–7 seconds. A test does not replace the full storyboard or the iteration after the complete build.
