@@ -1,31 +1,30 @@
-# Согласованные стили и проверенные источники
+# Agreed Styles and Verified Sources
 
-## Стили
+## Styles
 
-Пользователь выбрал шесть частей конкретного учебного демо. Описания ниже согласованы для этого демо, а не как обязательный сценарий каждого ролика. Прежние несогласованные предложения не становятся выбранными автоматически. Для других задач подбирай язык по их брифу и не приписывай его постоянным предпочтениям пользователя.
+The user selected six parts for a specific tutorial demo. The descriptions below are agreed for that demo, not a required format for every video. Earlier unapproved suggestions are not automatically selected. For other tasks, choose a visual language from that brief; do not attribute it as a standing user preference.
 
-После явного согласования добавляй краткую карточку: название, источник/дата согласования, визуальная грамматика (формы, типографика, материал, свет, камера/ритм), границы применимости. Карточка описывает язык, а не обязательную последовательность сцен. Три механики ядра сохраняются с учётом явного брифа.
+After explicit approval, add a short card: name, source/approval date, visual grammar (shapes, typography, material, lighting, camera/rhythm), and scope. The card describes a visual language, not a mandatory scene order. Keep the three core mechanics subject to the explicit brief.
 
-## Выбранное учебное демо: шесть частей
+## Selected tutorial demo: six parts
 
-Основание — переданный выбор пользователя 16.10.2026. Формат и длительность берутся из отдельного брифа демо; здесь они не назначаются.
+Based on the user's selection provided on 2026-10-16. Format and duration come from a separate demo brief and are not set here.
 
-| Часть | Визуальный язык и действие |
+| Part | Visual language and action |
 |---|---|
-| Рукописный карандашный скетч | Рисованный штрих, давление/неровность линии, построение форм, лёгкая бумажная фактура. Текст/рисунок возникает по осмысленной траектории карандаша; обычный outline печатного шрифта не выдавай за рукопись. Намеренная смена рисунков допустима при плавной управляемой камере. |
-| Бумажный | Вырезанные формы, слои, кромки/контактные тени, складки и пластика материала. Растяжение, сжатие, столкновение и локальная stop-motion ступенчатость поддерживают действие, а не заменяют его случайной дрожью. |
-| Пиксельный | Единая рабочая пиксельная сетка, согласованные масштабы форм и глифов, управляемое движение без случайного размытия контуров. Отделяй частоту рисованных состояний от fps вывода; финальные тексты читаемы. |
-| 2D + SaaS/UI | Плоский интерфейс с карточками, панелями, кнопками, понятным курсором и причинной сменой состояний. Зритель видит работу продукта через конкретное действие. |
-| 2.5D + SaaS/UI | Тот же интерфейс: плоские панели разведены по глубине; камера раскрывает слои и параллакс. Не имитируй настоящую 3D-толщину или боковины. |
-| 3D + SaaS/UI | Те же узнаваемые объекты получают настоящую толщину, кромки и боковые поверхности, соответствующие свет/тени, объём и пространственный обход/пролёт. Отличие от 2.5D видно в выходе. |
+| Hand-drawn pencil sketch | Drawn strokes, pressure/line irregularity, shape construction, light paper texture. Text/drawing appears along a meaningful pencil path; do not call a regular font outline handwriting. Intentional changes between drawings are allowed with a smooth controlled camera. |
+| Paper | Cut-out shapes, layers, edges/contact shadows, folds and material behavior. Stretching, compression, collisions, and localized stop-motion stepping support the action rather than replace it with random jitter. |
+| Pixel art | One consistent pixel grid, coherent scale for shapes/glyphs, controlled motion without accidental edge blur. Distinguish drawn-state rate from output FPS; final text must remain readable. |
+| 2D + SaaS/UI | Flat interface with cards, panels, buttons, a clear cursor, and causal state changes. The viewer sees the product working through a concrete action. |
+| 2.5D + SaaS/UI | The same interface, with flat panels separated in depth; camera reveals layers and parallax. Do not fake real 3D thickness or sides. |
+| 3D + SaaS/UI | The same recognizable objects gain actual thickness, edges and sides, corresponding light/shadows, volume, and spatial orbit/fly-through. The exported result should visibly differ from 2.5D. |
 
-В последней тройке сохраняй идентичность интерфейса, данных и объектов; меняй способ пространственного представления. Правила взаимодействий и проекции — в [SaaS/UI motion](saas-ui-motion.md).
+In the final three parts, preserve interface identity, data, and objects while changing their spatial representation. Interaction and projection rules are in [SaaS/UI motion](saas-ui-motion.md).
 
-На протяжении всех шести частей используй один и тот же фиксированный screen space индикатор: постоянные позиция и оформление, меняется название текущей части. Не привязывай его к мировой камере; защищай от перекрытия и обрезок. Энергичные переходы связывай с выразительными акцентами фактической музыки/SFX, сохраняя чтение и смысл. Это маркировка и режиссура учебного демо, не универсальное требование к другим видео.
+Across all six parts, use the same fixed screen-space indicator: keep its position and style; change the name of the current part. Do not attach it to the world camera; prevent occlusion and cropping. Connect energetic transitions to expressive accents in the actual music/SFX while preserving readability and meaning. This label and direction are specific to the tutorial demo, not universal requirements.
 
-## Источники
+## Sources
 
-Исследования переданы 16.10.2026: [источники 3D](3d-sources.md) и [источники изображений](image-providers.md). Это проверка документации, не практический тест сохранения персонажа, скачивания каждой модели или независимая перепроверка автором редакции. VidIQ остаётся опциональным, не заявляется безусловно бесплатным способом генерации голоса или музыки; голос для будущего теста не выбран, генерации не запускались.
+Research was provided on 2026-10-16: [3D sources](3d-sources.md) and [image providers](image-providers.md). It reviewed documentation; it did not practically test character preservation, download every model, or independently recheck the editor's findings. VidIQ remains optional and is not claimed to be an unconditionally free voice/music generation method; no voice was selected for a future test, and no generations were run.
 
-Добавляй только фактически проверенные записи: сайт/точная страница, что доступно, нужен ли аккаунт, условия бесплатного использования и конкретного файла, формат/выход, дата и способ проверки, известные ограничения. Различай текст страницы, preview, доступ к скачиванию, реальный файл и проверенную работу. Не заявляй эффективность по одному URL или наличию карточки.
-
+Add only entries that were actually checked: site/exact page, what is available, whether an account is required, terms for free use and the specific file, format/output, date and method of review, and known limits. Distinguish page text, preview, download access, actual file, and tested operation. Do not claim effectiveness based only on a URL or listing.
