@@ -1,13 +1,13 @@
-# Видео: фактический разбор и сочетание референсов
+# Video References: Evidence-Based Review and Combination
 
-Если предоставлен файл, работай с его реальными кадрами и доступным аудио. Если дан URL, сначала фактически открой страницу и получи доступный материал. Не описывай монтаж, движение, кадры или музыку по заголовку/ссылке. Страница может дать только текст или poster: явно укажи объём доступа. Если видео недоступно, назови недоступный материал; независимую постановку можно продолжить, не приписывая ей наблюдения из этого референса.
+If a video file is provided, work from its actual frames and available audio. If a URL is provided, open the page and obtain accessible material first. Do not describe editing, motion, frames, or music from a title/link alone. A page may expose only text or a poster: state the scope of access explicitly. If the video is unavailable, identify the missing material; you can continue with an independent production plan without attributing observations to that reference.
 
-Составь карту сцен и переходов с таймкодами: границы, длительности/крупности, композиция и слои, действие героя, типографика, путь и скорость камеры, материал/свет, носитель стыка, звук и ритм. Для важных стыков извлеки плотную последовательность до/внутри/после и посмотри движение в темпе. По отдельному still не определяй точную скорость, easing или качество звучания. Не выдавай три выбранных кадра за покадровый разбор всего ролика.
+Create a timecoded map of scenes and transitions: boundaries, duration/shot sizes, composition and layers, character action, typography, camera path/speed, material/light, transition carrier, sound, and rhythm. For important transitions, extract a dense sequence before/during/after and watch the motion at speed. Do not infer exact speed, easing, or sound quality from one still. Do not present three selected frames as a frame-by-frame analysis of the whole video.
 
-Разделяй наблюдение и перенос: **видно/слышно в конкретном интервале → полезный принцип → собственное решение для текущей истории**. Сохраняй источник и статус доступа. Разбор чужого приёма не даёт права автоматически включать чужое видео, модель, шрифт или музыку в выход.
+Separate observation from adaptation: **what is visible/audible in a specific interval → useful principle → original choice for the current story**. Keep the source and access status. Analyzing someone else's technique does not grant permission to include their video, model, font, or music in the output.
 
-## Если нужно сочетать три референса
+## When combining three references
 
-Используй все три осмысленно. Зафиксируй, какую характеристику берёшь у каждого: например, пространственную композицию у первого, типографику у второго, камеру/ритм у третьего. Это пример распределения, не обязательное назначение. Отметь совместимые и конфликтующие свойства и создай общую систему, а не три независимых фрагмента.
+Use all three deliberately. Record which quality comes from each: for example, spatial composition from the first, typography from the second, camera/rhythm from the third. This is only an example, not a required assignment. Identify compatible and conflicting qualities and create one coherent system rather than three disconnected fragments.
 
-Адаптируй палитру, логотип, материалы, героя и среду по запросу; они не обязаны копировать источники. Сохраняй одну причинную нить и масштаб движения. Кратко покажи карту «референс → характеристика → применение», затем строй собственный сториборд. Смешивание референсов подчинено трём механикам ядра.
+Adapt palette, logo, materials, character, and environment as requested; they do not have to copy the sources. Keep one causal through-line and a coherent motion scale. Briefly show a map “reference → quality → application”, then build an original storyboard. Reference blending remains subject to the three core mechanics.
