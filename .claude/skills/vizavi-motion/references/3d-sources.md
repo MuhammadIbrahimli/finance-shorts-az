@@ -1,20 +1,20 @@
-# Источники готовых 3D-моделей
+# Sources for Ready-Made 3D Models
 
-Условный модуль: читай, когда в брифе нужны готовые модели. Основание — исследование, переданное для этой редакции 16.10.2026; оно не означает, что автор правки скачал и испытал каждый файл. Условия выбранного выпуска и доступность могут меняться: проверяй его страницу и вложенную лицензию при загрузке. Порядок ниже — выбор по задаче, не обязательная цепочка сайтов.
+This optional module is for briefs that need ready-made models. It is based on research provided for this revision on 2026-10-16; that does not mean the editor downloaded and tested every file. Terms and availability can change: check the specific item's page and included license when downloading. The order below is task-based, not a required sequence of websites.
 
-| Задача и источник | Что учитывать при выборе |
+| Need and source | Selection notes |
 |---|---|
-| Реалистичные объекты — [Poly Haven Models](https://polyhaven.com/models) | glTF, CC0, без регистрации. Подходит для реалистичных предметов; проверь комплект текстур и фактическую модель. |
-| Стилизованные наборы — [Kenney Assets](https://kenney.nl/assets) | Выбирай именно 3D-набор: доступен GLB, CC0. «Continue without donating» позволяет получить бесплатный набор без обязательного пожертвования. |
-| Персонажи и риги — [Quaternius](https://quaternius.com/) | У бесплатных Standard-выпусков часто есть FBX/glTF; Source может быть платным. Сохраняй лицензию именно выбранного выпуска; не считай весь сайт CC0. См. оговорку ниже. |
-| Реальные 3D-сканы — [ambientCG](https://ambientcg.com/list?type=3d-model,terrain) | CC0; проверь формат и комплект в ZIP. Не обещай, что каждый объект доступен в GLB. |
-| Конкретные устройства и другие модели — [Sketchfab](https://sketchfab.com/) | Ищи downloadable/free, glTF/GLB и условия конкретной модели. Для скачивания нужен аккаунт; используй уже доступный доступ либо другой источник, без самовольной регистрации. |
-| Бесплатные модели с фильтром формата — [CGTrader](https://www.cgtrader.com/3d-models?free=1) | Проверь glTF-фильтр, реальную нулевую цену и индивидуальные условия. «Free in subscription» не равно свободной бесплатной загрузке; возможны ожидание и лимит. |
-| Стилизованные персонажи — [KayKit Adventurers](https://kaylousberg.itch.io/kaykit-adventurers) | Бесплатная часть: 5 моделей FBX/glTF, CC0; extras платные. Не приписывай бесплатной части весь дополнительный контент. |
-| Технический резерв — [Khronos glTF Sample Assets](https://github.com/KhronosGroup/glTF-Sample-Assets) | GLB/glTF для совместимости и технических сцен. Лицензия указана в README каждого ассета; общей лицензией репозитория её не заменяй. |
+| Realistic objects — [Poly Haven Models](https://polyhaven.com/models) | glTF, CC0, no account. Suitable for realistic objects; check the included textures and actual model. |
+| Stylized sets — [Kenney Assets](https://kenney.nl/assets) | Choose a specifically 3D set: GLB is available, CC0. “Continue without donating” allows a free download without a required donation. |
+| Characters and rigs — [Quaternius](https://quaternius.com/) | Free Standard releases often include FBX/glTF; Source may be paid. Keep the license for the exact release; do not assume the entire site is CC0. See note below. |
+| Real 3D scans — [ambientCG](https://ambientcg.com/list?type=3d-model,terrain) | CC0; check format and included files in the ZIP. Do not promise every object is available in GLB. |
+| Specific devices and other models — [Sketchfab](https://sketchfab.com/) | Search for downloadable/free models, glTF/GLB, and terms for the specific model. An account is required to download; use already available access or another source, without registering on your own. |
+| Free models with format filter — [CGTrader](https://www.cgtrader.com/3d-models?free=1) | Check the glTF filter, actual zero price, and individual terms. “Free in subscription” is not a free unrestricted download; a wait and quota may apply. |
+| Stylized characters — [KayKit Adventurers](https://kaylousberg.itch.io/kaykit-adventurers) | Free portion: 5 FBX/glTF models, CC0; extras are paid. Do not attribute all extra content to the free portion. |
+| Technical fallback — [Khronos glTF Sample Assets](https://github.com/KhronosGroup/glTF-Sample-Assets) | GLB/glTF for compatibility and technical scenes. Each asset's license is listed in its README; do not replace it with the repository's general license. |
 
-**Quaternius:** [QAL v1.0 от 28.08.2026](https://quaternius.com/license.html) допускает личные и коммерческие готовые проекты, но запрещает распространение самостоятельных ассетов, паков и шаблонов. Некоторые старые конкретные выпуски могут сохранять CC0. Не переноси лицензию одного выпуска на другой. Для этого skill-пакета сохраняй сведения и ссылки, а не включай саму модель в распространяемый навык.
+**Quaternius:** [QAL v1.0 dated 2026-08-28](https://quaternius.com/license.html) allows personal and commercial finished projects but prohibits distributing standalone assets, packs, and templates. Some older specific releases may retain CC0. Do not transfer the license of one release to another. For this skill bundle, retain information and links rather than including the model itself in a redistributable skill.
 
-**Poly Pizza:** не выбирай его основным автоматическим источником: [условия](https://poly.pizza/docs/tos) ограничивают автоматизированные загрузки. Это локальное ограничение способа получения, не запрет 3D в проекте. Выбери другой подходящий бесплатный источник; не обходи ограничение доступа.
+**Poly Pizza:** do not use it as the default automated source: its [terms](https://poly.pizza/docs/tos) restrict automated downloads. This is a restriction on how to obtain assets, not a ban on using 3D in a project. Choose another suitable free source; do not bypass access controls.
 
-Обычная разрешённая загрузка для личного ролика не требует отказа от всего проекта из-за возможного будущего коммерческого использования. В конце результата кратко укажи реально использованные источник, автора, выпуск/версию и условия. Если модель недоступна, платная или условия не подходят конкретному действию, ищи следующую; не называй бесплатное разрешением на любые способы распространения. Подготовка модели описана в [3D-процессе](models-3d.md).
+A normal permitted download for a personal video does not require abandoning the whole project because of hypothetical future commercial use. Briefly credit the actual source, author, release/version, and terms used. If a model is unavailable, paid, or its terms do not permit the intended use, try another; a free price is not permission for every kind of redistribution. Model preparation is described in [the 3D workflow](models-3d.md).
