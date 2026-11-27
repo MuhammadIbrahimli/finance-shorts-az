@@ -1,6 +1,6 @@
 ---
 name: vizavi-motion
-description: "Создавай и дорабатывай оригинальные motion-ролики, продуктовые анимации и кинетическую типографику: от идеи и динамической раскадровки до проверенного экспорта."
+description: "Create and refine original motion videos, product animations, and kinetic typography, from concept and dynamic storyboard to reviewed export."
 metadata:
   version: "1.6.1"
   display_name: "vizavi_motion"
@@ -8,51 +8,51 @@ metadata:
 
 # vizavi_motion
 
-Три механики ниже — основа навыка. Дополнительные модули помогают их выполнить, а не заменяют и не задают обязательный шаблон. Явный бриф пользователя, формат, длительность, звук и разрешённые ресурсы имеют приоритет над defaults. Простой идеи достаточно: постановочные решения принимай самостоятельно, не требуя от пользователя технической анкеты. Не выдумывай реальные свойства продукта, цены или подтверждённые предпочтения.
+The three mechanics below are the foundation of this skill. Additional modules help carry them out; they do not replace them or impose a required template. The user's explicit brief, format, duration, audio, and permitted resources take priority over defaults. A simple idea is enough: make production decisions independently instead of asking the user to fill out a technical questionnaire. Do not invent real product attributes, prices, or confirmed preferences.
 
-По умолчанию предпочитай прямой HTML/CSS/JavaScript, SVG/Canvas и собственный управляемый таймлайн, когда их достаточно для качества. Подходящие библиотеки и движки разрешены по реальной необходимости; не назначай каркас и не устанавливай зависимости заранее без пользы.
+By default, prefer direct HTML/CSS/JavaScript, SVG/Canvas, and a custom controlled timeline when they are sufficient for the desired quality. Appropriate libraries and engines are allowed when genuinely needed; do not choose a framework or install dependencies in advance without a reason.
 
-## 0. Переопределения для канала (finance-shorts-az) — имеют приоритет над разделами ниже
+## 0. Channel overrides (finance-shorts-az) — take precedence over the sections below
 
-Этот скилл используется только для роликов этого репозитория. Где дефолты ниже расходятся с правилами канала, действуют правила канала из `AGENTS.md` и `CLAUDE.md`:
+This skill is used only for videos in this repository. When the defaults below conflict with channel rules, follow the channel rules in AGENTS.md and CLAUDE.md:
 
-- **Формат:** 9:16, **1080×1920**, **24 fps**, H.264 (`libx264 -preset slow -crf 22`), yuv420p, AAC. Дефолты 1920×1080 и 60 fps здесь не применяются.
-- **Звук:** только озвучка (Gemini TTS). **Музыки и SFX нет.** Пункт 1 про музыку и звуковой дизайн здесь не действует.
-- **Стиль:** бумажный коллаж (`AGENTS.md`, образец `references/2d-video/sheets/`): текстура бумаги, неровные края, мягкие тени, приглушённая палитра, 3+ плана с параллаксом. Плоские векторные заливки без текстуры не принимаются.
-- **Люди:** если сюжет про людей, в кадрах полноценные персонажи (голова без лица, тело, руки, ноги, одежда). Абстрактные диаграммы допустимы только как вставки, а не как весь кадр.
-- **Субтитры:** караоке по спецификации `AGENTS.md`, плашка по центру y≈1540, текст = сценарий, тайминги из `work/words.json`.
-- **Контракт сцены:** `window.renderAt(t)` — чистая функция времени; `window.DURATION_SEC`; `templates/scene_template.html`.
-- **Проверка:** обязательны три субагента из `.claude/agents/` (`video-quality-reviewer`, `art-director`, `subtitle-auditor`). Первый проход — не финал.
-- **Выдача:** блок на азербайджанском (Başlıq, Örtük üçün prompt, Təsvir с 5 хэштегами), см. `AGENTS.md`.
+- **Format:** 9:16, **1080×1920**, **24 fps**, H.264 (libx264 -preset slow -crf 22), yuv420p, AAC. The 1920×1080 and 60 fps defaults do not apply here.
+- **Audio:** narration only (Gemini TTS). **No music or SFX.** Section 1's music and sound-design advice does not apply.
+- **Style:** paper collage (AGENTS.md, references in references/2d-video/sheets/): paper texture, irregular edges, soft shadows, muted palette, 3+ parallax planes. Flat vector fills without texture are not acceptable.
+- **People:** when the story is about people, show complete characters (featureless head, body, arms, legs, clothing). Abstract diagrams may appear as inserts, not as the entire frame.
+- **Subtitles:** follow AGENTS.md karaoke specification; panel centered near y≈1540; text matches the script; timings from work/words.json.
+- **Scene contract:** window.renderAt(t) is a pure function of time; use window.DURATION_SEC and templates/scene_template.html.
+- **Review:** all three agents in .claude/agents/ are required: video-quality-reviewer, art-director, subtitle-auditor. The first pass is not final.
+- **Delivery:** provide the Azerbaijani block (Başlıq, Örtük üçün prompt, Təsvir with 5 hashtags), as described in AGENTS.md.
 
-## 1. Качество по умолчанию
+## 1. Default quality
 
-Создавай живую, насыщенную и детально проработанную анимацию. Камера непрерывно движется во время активного повествования: плавные разгоны и торможения, связная траектория, мотивированные наклоны, диагонали, лёгкие повороты и облёты. Показывай перспективную глубину и относительное движение переднего, среднего и заднего планов. Один линейный zoom плоской композиции этого не заменяет. Техническая пауза и конечный читаемый кадр не требуют бессмысленного движения.
+Create lively, rich, detailed animation. Keep the camera moving smoothly during active narration: controlled acceleration and deceleration, coherent trajectories, motivated tilts, diagonals, slight rotations, and orbits. Show perspective depth and relative motion between foreground, midground, and background. A single linear zoom across a flat composition is not a substitute. A technical pause or a final readable frame does not need meaningless motion.
 
-Типографика участвует в действии: выразительная гарнитура, пластика формы, букв, слов и пространства, а не только появление подписи. У объектов есть вес, инерция, материал, свет, контакт и вторичные реакции. Меняй акценты и крупность без долгого зависания и хаотического мельтешения; насыщенность сохраняй через иерархию, а не удаление всей среды.
+Typography participates in the action: use expressive type and shape, and animate letters, words, and spatial form rather than merely revealing a caption. Objects should convey weight, inertia, material, lighting, contact, and secondary reactions. Vary emphasis and shot size without long idle holds or chaotic flicker; preserve visual richness through hierarchy rather than removing the environment.
 
-Используй motion blur по относительному движению и управляемую глубину резкости в пространственных/близких планах. При необходимости добавляй радиальное размытие для карточек или глубоких сцен; оно не заменяет DOF или motion blur. Сохраняй читаемость и узнаваемость. По умолчанию создай подходящую музыку **и** звуковой дизайн, синхронные ритму, действиям и стилю, без обязательного инструмента генерации. Если бриф требует тишину — звук отсутствует. Немой результат не называй озвученным. Детали: [движение и звук](references/motion-and-sound.md).
+Use motion blur based on relative motion and controlled depth of field in spatial or close shots. When useful, add radial blur for cards or deep scenes; it does not replace depth of field or motion blur. Preserve readability and recognizability. By default, create suitable music and sound design synchronized with rhythm, action, and style, without requiring a particular generation tool. If the brief requires silence, omit audio. Do not call a silent result narrated. Details: references/motion-and-sound.md.
 
-Периодически связывай переходы, склейки и значимые действия с выразительными акцентами фактической музыки/SFX; это осмысленные точки синхронизации, а не обязательная смена кадра на каждый бит.
+Periodically connect transitions, cuts, and meaningful actions to expressive accents in the actual music/SFX. Treat these as deliberate sync points, not a requirement to change the shot on every beat.
 
-## 2. Режиссура до реализации
+## 2. Direct before implementation
 
-До полной сборки разработай единую оригинальную идею/нить и полную динамическую раскадровку. Для **каждой сцены** предложи 3–5 существенно разных кратких творческих вариантов и выбери сильнейший с учётом целого. Достаточно лаконичных вариантов, выбранного решения и практического сториборда; внутренний ход рассуждений не требуется.
+Before full production, develop one original concept/thread and a complete dynamic storyboard. For **each scene**, propose 3–5 meaningfully different short creative options and choose the strongest one for the overall piece. Concise options, the selected direction, and a practical storyboard are enough; internal reasoning is not required.
 
-В каждом плане зафиксируй смысловой акцент, композицию и слои, действие/изменение объекта, текст и его движение, камеру, свет/фокус, вход из предыдущей сцены, выход в следующую, звук и ритм. Сцены должны причинно развивать историю. Круг, буква O или портал — лишь возможный приём; не повторяй их автоматически. Можно объединить 2–3 приёма, если они образуют цельное действие. Перед дорогой сборкой проверь главный технический или художественный риск короткой пробой. Детали: [раскадровка](references/storyboard.md).
+For each shot, define the semantic emphasis, composition and layers, action/object change, text and its motion, camera, lighting/focus, entry from the previous scene, exit into the next scene, sound, and rhythm. Scenes should advance the story causally. A circle, letter O, or portal is only one possible technique; do not repeat it automatically. You may combine 2–3 techniques when they form one coherent action. Before expensive production, test the main technical or artistic risk with a short prototype. Details: references/storyboard.md.
 
-## 3. Обязательная итерация после первой сборки
+## 3. Required iteration after the first build
 
-Первую сборку по умолчанию считай внутренним недоработанным черновиком и не выдавай сразу как финал. Просмотри весь ролик, каждую сцену и переходы; со звуком — прослушай музыку, SFX и полный микс. Проверь смысл, скучные задержки, темп, камеру, читаемость, форму, артефакты, стыки и синхронность. Исправь найденные причины, повторно проверь изменённое и целое. Не заявляй проверенную эффективность навыка по наличию инструкций или одному удачному кадру.
+By default, treat the first build as an unfinished internal draft, not a final deliverable. Watch the entire video, every scene, and transitions; when audio is present, listen to the music, SFX, and complete mix. Check meaning, dull pauses, pacing, camera, readability, shape, artifacts, cuts, and sync. Fix the underlying causes, then review the changes and the complete video again. Do not claim the skill's effectiveness is proven by the presence of these instructions or one successful frame.
 
-По умолчанию сдавай завершённый **MP4: 1920×1080, 60 fps, H.264, yuv420p, звук AAC**, если пользователь не просил без звука. HTML/JS и прочие редактируемые исходники сохраняй дополнительно; 4K — по запросу, явные параметры брифа важнее defaults. HTML-превью не заменяет готовое видео.
+By default, deliver a finished **MP4: 1920×1080, 60 fps, H.264, yuv420p, AAC audio**, unless the user requested silence. Also save editable HTML/JS and other sources; provide 4K on request. Explicit brief parameters override defaults. An HTML preview is not a substitute for the finished video.
 
-Проверяй также **финальный декодированный экспорт**, его начало, конец, границы сцен и технические параметры. Код, контактный лист и счётчик кадров не заменяют восприятие движения/звука. Если нужного инструмента нет, честно отметь конкретное непроверенное свойство и выдай доступный артефакт с соответствующим статусом, не называя его прошедшим эту проверку. Завершай после исправления существенных дефектов и выполненных критериев брифа; необязательные вкусовые альтернативы не требуют бесконечной переделки. Детали: [проверка и экспорт](references/review-and-export.md).
+Also inspect the **final decoded export**, including its beginning, ending, scene boundaries, and technical properties. Code, a contact sheet, and a frame count do not substitute for perceiving motion and sound. If a required tool is unavailable, state exactly which property was not checked and provide the available artifact with an accurate status; do not claim it passed that check. Finish once material defects are fixed and brief criteria are met; optional stylistic alternatives do not require endless revisions. Details: references/review-and-export.md.
 
-### Дополнительные модули — только по задаче
+### Additional modules — use only when relevant
 
-- Видео или несколько референсов: [разбор и сочетание](references/video-references.md).
-- Серия изображений, персонаж, alpha: [сохранение идентичности](references/image-continuity.md).
-- Готовые 3D-модели, материалы, шарниры: [3D-ресурсы](references/models-3d.md).
-- Продуктовая анимация интерфейса, курсор и состояния: [SaaS/UI motion](references/saas-ui-motion.md).
-- Согласованные стили и проверенные источники: [реестр](references/styles-and-sources.md). Выбранные шесть частей учебного демо применяются только к этому демо; для других роликов выбирай язык по их брифу.
+- Video or multiple references: analysis and combination — references/video-references.md.
+- Image series, characters, alpha: identity consistency — references/image-continuity.md.
+- Existing 3D models, materials, joints: 3D assets — references/models-3d.md.
+- Product interface animation, cursor, and states: SaaS/UI motion — references/saas-ui-motion.md.
+- Consistent styles and verified sources: registry — references/styles-and-sources.md. The six selected parts of the tutorial demo apply only to that demo; for other videos, follow their own brief.
