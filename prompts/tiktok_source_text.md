@@ -1,15 +1,17 @@
-Получи текст озвучки выбранного TikTok-ролика через коннектор vidIQ и сохрани его для написания нового сценария.
+Retrieve the voiceover text from the selected TikTok video through the vidIQ connector and save it for writing a new script.
 
-Ссылка: {TREND_URL}
+Link: {TREND_URL}
 
-Шаг 1. Вызови vidiq_watch_shortform_content с url = ссылка выше и prompt:
-"Transcribe all spoken narration and on-screen text verbatim, in order. Plain text only, no timestamps, no scene descriptions."
-Инструмент асинхронный: он вернёт mcpJobId.
+Step 1. Call `vidiq_watch_shortform_content` with `url` equal to the link above and this prompt:
+```
+Transcribe all spoken narration and on-screen text verbatim, in order. Plain text only, no timestamps, no scene descriptions.
+```
+The tool is asynchronous and will return an `mcpJobId`.
 
-Шаг 2. Опрашивай vidiq_job_poll с этим mcpJobId, пока статус не станет completed. Если статус failed или прошло больше 10 опросов без результата, остановись и ответь строкой «ОШИБКА VIDIQ: <причина>».
+Step 2. Poll `vidiq_job_poll` with that `mcpJobId` until the status becomes `completed`. If the status is `failed`, or after more than 10 polls there is still no result, stop and reply: “VIDIQ ERROR: <reason>”.
 
-Шаг 3. Запиши результат в work/transcript.txt (UTF-8): только текст реплик и надписей по порядку, без таймкодов, без описаний сцен, без пометок вида [music]. Если в результате есть только описание сцен без речи, так и напиши в отчёте и не записывай файл.
+Step 3. Write the result to `work/transcript.txt` (UTF-8): spoken words and on-screen text only, in order, with no timecodes, scene descriptions, or tags such as `[music]`. If the result contains only scene descriptions and no speech, state that in the report and do not write the file.
 
-Шаг 4. Запиши work/transcript_meta.json: {"video_id": "<из work/trend.json>", "source": "vidiq_tiktok", "chars": <длина текста>}.
+Step 4. Write `work/transcript_meta.json`: `{"video_id": "<from work/trend.json>", "source": "vidiq_tiktok", "chars": <text length>}`.
 
-Ограничения: это источник идей и фактов для нового сценария. Не копируй формулировки, не используй кадры, музыку или звук оригинала. Не отправляй ничего в Telegram и не коммить в git.
+Constraints: use this only as a source of ideas and facts for a new script. Do not copy wording or use the original footage, music, or audio. Do not send anything to Telegram or commit.
