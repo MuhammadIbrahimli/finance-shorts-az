@@ -1,33 +1,35 @@
-Найди один анимированный финансовый TikTok-ролик для широкой аудитории через коннектор vidIQ и запиши его в work/trend.json.
+Find one animated finance TikTok video for a broad audience through the vidIQ connector and save it to `work/trend.json`.
 
-Шаг 1. Вызови инструмент vidiq_instagram_tiktok_outlier_search ровно один раз со следующими параметрами:
-- query: "animated money finance explained for beginners"
-- audienceQuery: "Culture/Region: global; Global: true; Demographics: general audience 18-35 interested in personal finance;"
-- datePostedAfter: "{CUTOFF}"
-- excludeContentIds: {USED_IDS}
-- durationMax: 90
-- resultsPerPlatform: 10
-- embeddingType: "concept"
+Step 1. Call `vidiq_instagram_tiktok_outlier_search` exactly once with these parameters:
+- `query`: "animated money finance explained for beginners"
+- `audienceQuery`: "Culture/Region: global; Global: true; Demographics: general audience 18-35 interested in personal finance;"
+- `datePostedAfter`: "{CUTOFF}"
+- `excludeContentIds`: {USED_IDS}
+- `durationMax`: 90
+- `resultsPerPlatform`: 10
+- `embeddingType`: "concept"
 
-Шаг 2. Из секции TikTok (не Instagram) выбери ОДНО видео по правилам:
-- это анимация (анимированные персонажи, графика, мультипликация, а не живые люди с озвучкой);
-- это финансовое объяснение или история для широкой аудитории (сложные проценты, бюджет, привычки, кредиты), а не новости и не прогнозы рынка;
-- оно не из работ, уже перечисленных в excludeContentIds;
-- среди подходящих выбери с наибольшим количеством просмотров.
-Если подходящих TikTok-результатов нет, НЕ записывай файл и ответь одной строкой «НЕТ ПОДХОДЯЩИХ TIKTOK». Не подставляй Instagram вместо TikTok.
+Step 2. From the TikTok section (not Instagram), select ONE video using these rules:
+- It is animated (animated characters, graphics, or cartoons, not live people with voiceover).
+- It explains finance or tells a finance story for a broad audience (compound interest, budgeting, habits, credit), not news or market forecasts.
+- It is not already among the works listed in `excludeContentIds`.
+- Among qualifying results, choose the one with the most views.
+If there are no qualifying TikTok results, do NOT write a file; reply on one line: “NO SUITABLE TIKTOK RESULTS”. Do not substitute an Instagram result.
 
-Шаг 3. Запиши work/trend.json (UTF-8, JSON-объект) с полями:
+Step 3. Write `work/trend.json` (UTF-8 JSON object) with these fields:
+```json
 {
   "source": "tiktok_vidiq",
-  "video_id": "<id TikTok-видео из результата>",
-  "url": "<полная ссылка вида https://www.tiktok.com/@handle/video/<id>>",
-  "title": "<заголовок из результата>",
-  "description": "<описание из результата>",
-  "channel": "<@handle автора>",
-  "view_count": <число просмотров>,
-  "published_at": "<дата публикации из результата>",
-  "duration_sec": <длительность в секундах>
+  "video_id": "<TikTok video ID from the result>",
+  "url": "<full link such as https://www.tiktok.com/@handle/video/<id>>",
+  "title": "<title from result>",
+  "description": "<description from result>",
+  "channel": "<creator's @handle>",
+  "view_count": 0,
+  "published_at": "<publication date from result>",
+  "duration_sec": 0
 }
-Значения бери из результата vidIQ. Ничего не выдумывай: если поля нет в результате, ставь null.
+```
+Use values from vidIQ results. Do not invent anything: if a field is missing in the result, set it to `null`.
 
-Ответ после записи — одна строка: url выбранного видео. Не отправляй ничего в Telegram и не коммить в git.
+After saving, reply with one line containing the selected video's URL. Do not send anything to Telegram or commit.
