@@ -1,47 +1,47 @@
-# Изображения: условный выбор источника
+# Images: Conditional Provider Selection
 
-Читай только когда нужны изображения/reference editing. Актуальность переданного исследования — **16.10.2026**. Проверялась документация, не практическое сохранение идентичности персонажа. Сведения ниже не устанавливают интеграции и не означают доступ к аккаунту. Используй уже доступный разрешённый инструмент; новая регистрация, MCP/API или локальный backend не включаются автоматически. При недоступности одного маршрута выбирай другой, сохраняя постановку и честные ограничения.
+Read this only when images/reference editing are needed. The supplied research is dated **2026-10-16**. Documentation was checked; practical character-identity preservation was not tested. The information below does not configure integrations or imply account access. Use an already available permitted tool; registration, MCP/API access, or a local backend is not enabled automatically. If one route is unavailable, choose another while preserving the production plan and stating real limitations.
 
-## Основные кандидаты
+## Main candidates
 
-### Krea — готовый MCP-кандидат
+### Krea — ready MCP candidate
 
-[Официальная инструкция](https://www.krea.ai/docs/developers/mcp), endpoint: `https://api.krea.ai/mcp`.
-MCP через OAuth расходует compute units рабочего пространства; API-token расходует **отдельный платный API balance**. Не смешивай эти способы оплаты.
+[Official instructions](https://www.krea.ai/docs/developers/mcp), endpoint: https://api.krea.ai/mcp.
+MCP through OAuth uses workspace compute units; an API token uses a **separate paid API balance**. Do not confuse these billing methods.
 
-По [pricing](https://www.krea.ai/pricing), Free даёт 100 units ежедневно без карты. Ориентиры страницы — около 25 Klein или 5 Krea 3 Beta изображений в день; это **не гарантированное число reference edits**. Не обещай бесплатные Nano Banana/GPT Image. MCP описывает discovery/schema, references через URL/base64/upload, jobs и получение результата; фактическую схему выбранного инструмента читай перед вызовом.
+According to [pricing](https://www.krea.ai/pricing), Free provides 100 units daily without a card. The page's estimates are about 25 Klein or 5 Krea 3 Beta images per day; this is **not a guaranteed number of reference edits**. Do not promise free Nano Banana/GPT Image. MCP describes discovery/schema, references via URL/base64/upload, jobs, and retrieving results; check the selected tool's actual schema before calling it.
 
-[Krea 3](https://www.krea.ai/blog/introducing-krea-3) заявляет до 6 references; стабильность персонажа в исследовании не тестировалась. Коммерческая лицензия указана для платных планов; Free рассматривай как маршрут личного теста, не обещай его пригодность для монетизированного финала. Native alpha не подтверждён: скачай результат и при необходимости удали фон локально с проверкой края.
+[Krea 3](https://www.krea.ai/blog/introducing-krea-3) claims up to 6 references; character consistency was not tested in the research. Commercial licensing is listed for paid plans; treat Free as a personal testing option and do not promise it is suitable for a monetized final. Native alpha is unconfirmed: download the result and, if needed, remove the background locally while checking edges.
 
-### Cloudflare Workers AI — REST-кандидат, не готовый универсальный MCP
+### Cloudflare Workers AI — REST candidate, not a ready general-purpose MCP
 
-[Pricing](https://developers.cloudflare.com/workers-ai/platform/pricing/): Free 10000 neurons/day, сброс в 00:00 UTC, без платного перерасхода на Free; [продуктовая страница](https://www.cloudflare.com/products/workers-ai/) указывает вход без карты. Neurons — вычислительные единицы, **не число готовых картинок**.
+[Pricing](https://developers.cloudflare.com/workers-ai/platform/pricing/): Free provides 10,000 neurons/day, reset at 00:00 UTC, with no paid overage on Free; the [product page](https://www.cloudflare.com/products/workers-ai/) says no card is required. Neurons are compute units, **not a count of finished images**.
 
-У [FLUX.2 Klein 4B](https://developers.cloudflare.com/workers-ai/models/flux-2-klein-4b/) по [объявлению схемы](https://developers.cloudflare.com/changelog/post/2026-01-15-flux-2-klein-4b-workers-ai/) вход multipart: до 4 binary-полей `input_image_0`…`input_image_3`, каждый reference **меньше 512×512**; выходные размеры 256…1920, результат base64. Не подменяй это другой схемой или лимитом модели.
+For [FLUX.2 Klein 4B](https://developers.cloudflare.com/workers-ai/models/flux-2-klein-4b/), the [schema announcement](https://developers.cloudflare.com/changelog/post/2026-01-15-flux-2-klein-4b-workers-ai/) describes multipart input with up to 4 binary fields named input_image_0 through input_image_3; each reference must be **under 512×512**; output dimensions are 256–1920 and the result is base64. Do not substitute a different schema or model limit.
 
-[REST API](https://developers.cloudflare.com/workers-ai/get-started/rest-api/) требует узкого adapter/script в подходящем клиенте, если он будет отдельно разрешён. Общий `https://mcp.cloudflare.com/mcp` не проверен для этого потока; turnkey MCP не обещай. Native alpha не подтверждён.
+The [REST API](https://developers.cloudflare.com/workers-ai/get-started/rest-api/) requires a narrow adapter/script in a suitable client if separately authorized. The generic https://mcp.cloudflare.com/mcp endpoint was not verified for this workflow; do not promise a turnkey MCP. Native alpha is unconfirmed.
 
-### Веб-интерфейсы как резерв
+### Web interfaces as fallback
 
-[Gemini web](https://support.google.com/gemini/answer/14286560?hl=en) описывает reference editing и скачивание; [лимиты плавающие](https://support.google.com/gemini/answer/16275805?hl=en). Это **не бесплатный image API** — [API pricing](https://ai.google.dev/gemini-api/docs/pricing) рассматривается отдельно. Автоматизация возможна только при фактически доступном browser tool; обычный чат сам по себе не означает наличие браузера.
+[Gemini web](https://support.google.com/gemini/answer/14286560?hl=en) describes reference editing and downloads; [limits can change](https://support.google.com/gemini/answer/16275805?hl=en). This is **not a free image API**; [API pricing](https://ai.google.dev/gemini-api/docs/pricing) is separate. Automation is possible only if an actual browser tool is available; ordinary chat does not imply browser access.
 
-[Images in ChatGPT](https://help.openai.com/en/articles/11084440-images-in-chatgpt) — аналогичный веб-резерв, в том числе для запроса прозрачности. ChatGPT Free не означает бесплатный API, а запрос transparency не заменяет проверку alpha результата.
+[Images in ChatGPT](https://help.openai.com/en/articles/11084440-images-in-chatgpt) is a similar web fallback, including requests for transparency. ChatGPT Free does not mean a free API, and a transparency request does not replace checking the result's alpha channel.
 
-## Дополнительные варианты и границы бесплатности
+## Additional options and free-tier limits
 
-| Вариант | Что подтверждено документацией и чего не обещать |
+| Option | What documentation confirms and what not to promise |
 |---|---|
-| [Leonardo pricing](https://leonardo.ai/pricing) | 150 tokens/day, free-работы публичные, API отдельно. [Image guidance](https://intercom.help/leonardo-ai/en/articles/8497988-image-guidance) — Limited. [Transparency](https://intercom.help/leonardo-ai/en/articles/9075772-transparency) описана для подходящих SD1.5/SDXL; сочетание reference+alpha на Free требует фактической проверки. |
-| [Ideogram plans](https://docs.ideogram.ai/plans-and-billing/available-plans.md) | 30 credits/week при Google/Apple/Microsoft login; free-работы публичные. Бесплатный API не обещай. |
-| [Hugging Face Inference](https://huggingface.co/docs/inference-providers/main/pricing) и [ZeroGPU Spaces](https://huggingface.co/docs/hub/main/spaces-zerogpu) | $0.10/month в Inference; очереди и квоты в Spaces. Это не надёжный производственный backend по умолчанию. |
-| [Pollinations Pollen FAQ](https://raw.githubusercontent.com/pollinations/pollinations/main/enter.pollinations.ai/POLLEN_FAQ.md) | Купленные/заработанные Pollen. Не считать unlimited или бесплатным ежедневным image API. |
-| [Recraft Free](https://www.recraft.ai/docs/plans-and-billing/free-plan) | Ограниченный free-план без commercial license; не обещай бесплатный коммерческий финал. |
-| Replicate / fal | Trials не равны recurring-free. Не включай их в список постоянных бесплатных маршрутов без новой проверки конкретного предложения. |
+| [Leonardo pricing](https://leonardo.ai/pricing) | 150 tokens/day, free creations are public, API is separate. [Image guidance](https://intercom.help/leonardo-ai/en/articles/8497988-image-guidance) is Limited. [Transparency](https://intercom.help/leonardo-ai/en/articles/9075772-transparency) is described for eligible SD1.5/SDXL; reference+alpha on Free must be tested. |
+| [Ideogram plans](https://docs.ideogram.ai/plans-and-billing/available-plans.md) | 30 credits/week with Google/Apple/Microsoft login; free creations are public. Do not promise a free API. |
+| [Hugging Face Inference](https://huggingface.co/docs/inference-providers/main/pricing) and [ZeroGPU Spaces](https://huggingface.co/docs/hub/main/spaces-zerogpu) | $0.10/month in Inference; Spaces have queues and quotas. Not a reliable production backend by default. |
+| [Pollinations Pollen FAQ](https://raw.githubusercontent.com/pollinations/pollinations/main/enter.pollinations.ai/POLLEN_FAQ.md) | Purchased/earned Pollen. Do not treat it as unlimited or as a free daily image API. |
+| [Recraft Free](https://www.recraft.ai/docs/plans-and-billing/free-plan) | Limited free plan without a commercial license; do not promise a free commercial final. |
+| Replicate / fal | Trials are not recurring free access. Do not list them as permanently free without newly checking the specific offer. |
 
-## Необязательный локальный маршрут
+## Optional local route
 
-[ComfyUI MCP](https://docs.comfy.org/agent-tools/mcp), небольшой SD1.5/IPAdapter и [rembg](https://github.com/danielgatis/rembg) — отдельный вариант при подходящем уже доступном окружении или явном разрешении настройки. Не устанавливай автоматически. Не обещай мощные image-edit модели на RTX 3050 6 GB: для штатного Klein 4B в переданном исследовании указан benchmark 8.4 GB VRAM, что выше этой видеопамяти.
+[ComfyUI MCP](https://docs.comfy.org/agent-tools/mcp), a small SD1.5/IPAdapter setup, and [rembg](https://github.com/danielgatis/rembg) are a separate option when a suitable environment is already available or setup is explicitly authorized. Do not install automatically. Do not promise powerful image-editing models on an RTX 3050 6 GB: the supplied research lists an 8.4 GB VRAM benchmark for the standard Klein 4B, above this card's memory.
 
-Для каждой новой позы используй одни и те же канонические references, а не цепочку постепенно дрейфующих перегенераций. Для плавного движения часто лучше анимировать согласованный cutout/риг, чем независимо генерировать каждый кадр. Проверяй реальную alpha и край на светлом/тёмном: PNG сам по себе не означает прозрачность. Полный процесс — [согласованность изображений](image-continuity.md).
+Use the same canonical references for each new pose rather than a chain of increasingly drifting generations. For smooth motion, animating a consistent cutout/rig is often better than generating each frame independently. Check real alpha and edges on light/dark backgrounds: PNG alone does not imply transparency. Full workflow: [image continuity](image-continuity.md).
 
-В результате кратко укажи реально использованные provider/модель, доступный маршрут, дату проверки ограничений и источник/условия. VidIQ может быть опциональным источником звука в разрешённом будущем задании; он не универсальная зависимость, не заявляется безусловно бесплатным, голос за пользователя здесь не выбран. Никакая генерация в рамках подготовки этой редакции не выполняется.
+Briefly report the provider/model actually used, available route, date limitations were checked, and source/terms. VidIQ may be an optional audio source for a future authorized task; it is not a universal dependency and is not claimed to be unconditionally free. No voice was selected for the user, and no generation is performed while preparing this revision.
