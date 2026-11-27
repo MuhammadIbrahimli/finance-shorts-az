@@ -1,23 +1,23 @@
-Ты создаёшь сцену короткого финансового видео в бумажном коллаж-стиле для канала Disli Hardz. Работай в текущей папке репозитория.
+Create a scene for a short finance video in paper-collage style for the Disli Hardz channel. Work in the repository's current directory.
 
-Обязательно прочитай перед работой:
-1. AGENTS.md — правила канала (9:16, 1080×1920, 24 fps, бумажный коллаж, субтитры-караоке, без музыки).
-2. .claude/skills/vizavi-motion/SKILL.md — раздел 0 (переопределения для канала) и далее по необходимости.
-3. references/2d-video/sheets/sheet_02.png — образец стиля (посмотри картинку).
-4. templates/scene_template.html — контракт сцены: window.renderAt(t), window.DURATION_SEC, window.WORDS, drawSubtitles(t).
-5. work/script.json, work/words.json, work/narration_trim.wav (через ffprobe — длительность).
+Read first:
+1. `AGENTS.md` — channel rules (9:16, 1080×1920, 24 fps, paper collage, karaoke subtitles, no music).
+2. `.claude/skills/vizavi-motion/SKILL.md` — section 0 (channel overrides), then other sections as needed.
+3. `references/2d-video/sheets/sheet_02.png` — style reference; inspect the image.
+4. `templates/scene_template.html` — scene contract: `window.renderAt(t)`, `window.DURATION_SEC`, `window.WORDS`, `drawSubtitles(t)`.
+5. `work/script.json`, `work/words.json`, and `work/narration_trim.wav` (use ffprobe for duration).
 
-Задача:
-A. Напиши work/storyboard.md — таблица «таймкод | фраза | что видно | план | движение» по сегментам из work/words.json. Каждая фраза — своя иллюстрация в нужный момент.
-B. Напиши work/scene/index.html на основе templates/scene_template.html:
-   - window.DURATION_SEC = длительность work/narration_trim.wav + 1.2 с;
-   - window.WORDS = содержимое work/words.json (вставь массив в файл);
-   - window.renderAt(t) рисует бумажный коллаж: текстура бумаги, неровные края, мягкие тени, приглушённая палитра, 3+ плана с параллаксом;
-   - если в сюжете есть люди, это полноценные бумажные фигуры без черт лица (голова, шея, тело, одежда с деталями, руки с кистями, ноги, обувь);
-   - drawSubtitles(t) остаётся поверх каждого кадра, без изменений.
-C. Рендер: python scripts/render.py → work/video.mp4. Проверь ffprobe: 1080x1920, 24/1, yuv420p, есть аудио AAC.
-D. Контроль качества: python tools/make_review_sheets.py work/video.mp4 work/review 4 и посмотри work/review/sheet_*.png. Исправь найденные проблемы (обрезка, пустые кадры, несоответствие фразе, артефакты, лица) и повтори рендер и проверку.
+Tasks:
+A. Write `work/storyboard.md` as a table: “timecode | phrase | visible content | shot | motion”, based on segments in `work/words.json`. Give each phrase its own illustration at the right time.
+B. Create `work/scene/index.html` from `templates/scene_template.html`:
+   - `window.DURATION_SEC` = duration of `work/narration_trim.wav` + 1.2 seconds;
+   - `window.WORDS` = contents of `work/words.json` (embed the array in the file);
+   - `window.renderAt(t)` draws a paper collage: paper texture, irregular edges, soft shadows, muted palette, and 3+ parallax planes;
+   - if people appear, make them full paper figures without facial features (head, neck, body, detailed clothing, hands, legs, shoes);
+   - keep `drawSubtitles(t)` over every frame, unchanged.
+C. Render with `python scripts/render.py` to `work/video.mp4`. Check with ffprobe: 1080×1920, 24/1 fps, yuv420p, AAC audio.
+D. Review quality with `python tools/make_review_sheets.py work/video.mp4 work/review 4` and inspect `work/review/sheet_*.png`. Fix problems (cropping, blank frames, mismatch with phrase, artifacts, faces), then render and review again.
 
-Ограничения: не используй музыку и звуковые эффекты; не используй чужие видео, кадры или аудио; не меняй scripts/*.py, AGENTS.md и .claude/; ничего не отправляй в Telegram и не коммить в git.
+Constraints: no music or sound effects; do not use other people's videos, footage, or audio; do not change `scripts/*.py`, `AGENTS.md`, or `.claude/`; do not send anything to Telegram or commit.
 
-В конце ответь коротко: путь к work/video.mp4, длительность, что проверено по ffprobe, что видно на контактных листах, какие проблемы остались. Не утверждай, что проверил движение или звук в реальном времени.
+Finish with a brief report: path to `work/video.mp4`, duration, ffprobe checks, what is visible in the contact sheets, and remaining problems. Do not claim to have checked motion or real-time audio.
