@@ -1,19 +1,19 @@
-# Готовые 3D-модели и включение в сцену
+# Ready-Made 3D Models and Scene Integration
 
-Для личной задачи можно подбирать и скачивать подходящие готовые бесплатные модели в рамках текущего запроса. Предпочитай GLB/glTF, когда он подходит выбранному renderer и экспорту. Проверяй конкретный объект и его условия; «бесплатно» не означает любые права. Не вводи общий запрет загрузки из-за гипотетической будущей коммерции или раздачи исходников и не запрещай пользователю показывать устройства в видео.
+For a personal task, you may find and download suitable ready-made free models within the current request. Prefer GLB/glTF when compatible with the selected renderer and export. Check the exact asset and its terms; “free” does not mean unrestricted rights. Do not impose a blanket download ban because of hypothetical future commercialization or source-code distribution, and do not prohibit the user from showing devices in a video.
 
-Используй реально доступный источник и обычную разрешённую загрузку. Не обходи ограничения доступа и не выдавай отсутствующий доступ за полученную модель. Не превращай подбор в самовольную регистрацию или установку интеграций. Подбирай по [реестру 3D-источников](3d-sources.md); неизвестные сервисы, условия и тарифы не выдумывай.
+Use an actually available source and an ordinary permitted download. Do not bypass access restrictions or claim an inaccessible asset was obtained. Do not turn asset selection into unauthorized registration or integration setup. Choose from the [3D sources registry](3d-sources.md); do not invent unknown services, terms, or prices.
 
-## Перед сценой
+## Before using a model in a scene
 
-1. Проверь точную модель/вариант, формат и комплектность: mesh, UV, текстуры, материалы, rig/анимации и внешние зависимости. Открой/отрендери фактический файл, а не только превью страницы.
-2. Нормализуй единицы и масштаб, оси, положение, ориентацию, origin/pivot. Проверь нормали, кромки, толщину, топологию, прозрачность, roughness/metalness, color space текстур и соответствие renderer. Не подменяй свойства WebGPU/TSL свойствами обычного WebGL-материала.
-3. Проверь доступность текстур после загрузки, размеры, пути и корректность alpha. Убедись, что модель не распадается при выбранной крупности. Сокращай тяжёлые меши/текстуры с сохранением силуэта и нужных деталей; проверяй реальный темп рендера и путь экспорта.
-4. Настрой свет, окружение, экспозицию, камеру, тени и контакт под выбранный материал. Пластик, металл и стекло должны различаться поведением поверхности. Яркий блик и общий градиент не исправляют неверную форму.
-5. Для ноутбука проверь отдельные крышку/основание и ось петли. Открывание — относительное вращение крышки вокруг шарнира, а не поворот всего корпуса. Проверь закрытое/открытое состояния, экран, исходную ориентацию и отсутствие случайного днища в постановке.
+1. Check the exact model/variant, format, and contents: mesh, UVs, textures, materials, rig/animations, and external dependencies. Open or render the actual file, not just the website preview.
+2. Normalize units and scale, axes, position, orientation, origin/pivot. Check normals, edges, thickness, topology, transparency, roughness/metalness, texture color space, and renderer compatibility. Do not attribute WebGPU/TSL properties to an ordinary WebGL material.
+3. Check texture availability after download, dimensions, paths, and alpha. Make sure the model holds together at the chosen shot size. Reduce heavy meshes/textures while preserving silhouette and necessary detail; check actual render speed and export path.
+4. Set lighting, environment, exposure, camera, shadows, and contact for the chosen material. Plastic, metal, and glass should behave differently. A bright highlight or general gradient does not fix incorrect shape.
+5. For a laptop, check the lid/base as separate parts and the hinge axis. Opening is the lid's relative rotation around the hinge, not rotation of the whole body. Check closed/open states, screen, original orientation, and ensure an unintended underside is not shown.
 
-Нужное скрытие/reveal, подписи и камера подчинены одной пространственной сцене. На близком проходе сохраняй фокус героя и правильный масштаб, не пересекай поверхность near-plane. При замене модели повторно проверь ориентацию, pivot, свет, контакт и анимацию.
+Conceal/reveal, labels, and camera should belong to one coherent spatial scene. In a close pass, preserve the main subject's focus and correct scale; do not cross the near plane. When replacing a model, recheck orientation, pivot, lighting, contact, and animation.
 
-## Короткие сведения в конце результата
+## Brief asset notes in the final result
 
-Перечисли реально использованные сайты/страницы и конкретные файлы: автор/название, ссылка, формат, заявленная лицензия или условия с датой проверки, существенная атрибуция и изменения. Права на код, модель, текстуры, шрифт и музыку могут различаться. Если нужный объём использования реально ограничен, сообщи это точно и подбери разрешённую альтернативу; не превращай обычную личную загрузку в юридический барьер. Не называй право на просмотр/скачивание правом на перепродажу или распространение актива.
+List the actual websites/pages and specific files used: author/title, link, format, stated license or terms with the date checked, required attribution, and modifications. Rights may differ for code, model, textures, font, and music. If the intended use is genuinely restricted, state that accurately and choose a permitted alternative; do not turn ordinary personal downloads into a legal barrier. Do not confuse permission to view/download with permission to resell or distribute an asset.
