@@ -1,23 +1,23 @@
-Ты создаёшь сцену ролика канала Daxilde в стиле «Тетрадь Кахаля» (гравюра на пергаменте). Работай в текущей папке репозитория.
+Create a scene for a Daxilde channel video in the “Kahlo's Notebook” style (engraving on parchment). Work in the repository's current directory.
 
-Обязательно прочитай перед работой:
-1. channels/daxilde/AGENTS.md — стиль, палитра, люди, движение, субтитры, звук, выдача. Это правила канала, они важнее любых других.
-2. AGENTS.md — только технический формат (9:16, 1080×1920, 24 fps, H.264, AAC).
-3. templates/scene_template.html — контракт сцены: window.renderAt(t), window.DURATION_SEC, window.WORDS, drawSubtitles(t).
-4. work/script.json (accent, metaphors, narration_az), work/words.json (тайминги слов — уже исправлены, не меняй их), длительность work/narration_trim.wav (через ffprobe).
+Read these before starting:
+1. `channels/daxilde/AGENTS.md` — channel style, palette, people, motion, subtitles, audio, and delivery. These channel rules override all others.
+2. `AGENTS.md` — technical format only (9:16, 1080×1920, 24 fps, H.264, AAC).
+3. `templates/scene_template.html` — scene contract: `window.renderAt(t)`, `window.DURATION_SEC`, `window.WORDS`, `drawSubtitles(t)`.
+4. `work/script.json` (`accent`, `metaphors`, `narration_az`), `work/words.json` (word timings are already corrected; do not change them), and `work/narration_trim.wav` duration (use ffprobe).
 
-Задача:
-A. Напиши work/storyboard.md: таблица «таймкод | фраза | метафора/сцена | камера | движение прорисовки». Каждая смысловая фраза — своя метафора из metaphors, по таймкодам words.json.
-B. Напиши work/scene/index.html на основе templates/scene_template.html:
-   - window.DURATION_SEC = длительность озвучки + 1.2 с;
-   - window.WORDS = содержимое work/words.json;
-   - ОБЯЗАТЕЛЬНО: в scene-коде перед рендером установи SUB.active = '#c98b5a' (карамельно-коричневый) и SUB.word = '#f7f2e6', остальное оставь по спецификации (Arial 700 52 px, плашка y≈1540, не более 3 слов);
-   - рисуй гравюру: тёмный пергамент, штриховка и перекрёстная штриховка, слоновая кость на чёрном, ОДНО цветное пятно-акцент по accent из script.json; прорисовка линий перьевыми штрихами слева направо;
-   - люди, если есть: силуэты без лица, с шеей, плечами, кистями, ногами, одеждой в штриховке; руки двухзвенные;
-   - по краю кадра тонкая двойная рамка листа; виньетка и зерно.
-C. Рендер: python scripts/render.py → work/video.mp4. Проверь ffprobe: 1080x1920, 24/1, yuv420p, есть AAC.
-D. Контроль: python tools/make_review_sheets.py work/video.mp4 work/review 4 и посмотри листы инструментом Read. Исправь заметные дефекты (пустые кадры, несоответствие фразе, лица, плашка на неподходящем месте) и повтори рендер.
+Tasks:
+A. Write `work/storyboard.md` as a table: “timecode | phrase | metaphor/scene | camera | drawing motion”. Give each meaningful phrase its own metaphor from `metaphors`, timed from `words.json`.
+B. Create `work/scene/index.html` from `templates/scene_template.html`:
+   - `window.DURATION_SEC` = narration duration + 1.2 seconds;
+   - `window.WORDS` = contents of `work/words.json`;
+   - REQUIRED: before rendering, set `SUB.active = '#c98b5a'` (caramel brown) and `SUB.word = '#f7f2e6'`; keep the rest per specification (Arial 700, 52 px, panel near y≈1540, at most 3 words);
+   - draw an engraving: dark parchment, hatching and cross-hatching, ivory on black, ONE colored accent from `accent` in `script.json`; draw lines with pen strokes from left to right;
+   - if people appear, use faceless silhouettes with necks, shoulders, hands, legs, and hatched clothing; arms have two segments;
+   - add a thin double-page border near the frame edge, vignette, and grain.
+C. Render with `python scripts/render.py` to `work/video.mp4`. Check with ffprobe: 1080×1920, 24/1, yuv420p, AAC present.
+D. Review with `python tools/make_review_sheets.py work/video.mp4 work/review 4` and inspect the sheets with the Read tool. Fix visible defects (blank frames, mismatch with narration, faces, badly placed subtitle panel) and render again.
 
-Ограничения: музыки нет. SFX в конвейере пока не реализованы: так и напиши в отчёте, не заявляй, что звук оформлен. Не используй чужие кадры или видео. Не меняй scripts/*.py, AGENTS.md, channels/, .claude/. Не отправляй в Telegram и не коммить.
+Constraints: no music. SFX are not implemented in the pipeline yet; say so in the report and do not claim the sound was designed. Do not use other people's footage or videos. Do not change `scripts/*.py`, `AGENTS.md`, `channels/`, or `.claude/`. Do not send anything to Telegram or commit.
 
-В конце ответь коротко: путь к work/video.mp4, длительность, что проверено по ffprobe, что видно на листах, что не сделано (в том числе SFX).
+Finish with a brief report: path to `work/video.mp4`, duration, ffprobe checks, what is visible on the sheets, and what was not done (including SFX).
