@@ -1,25 +1,26 @@
-Ты пишешь сценарий короткого финансового видео на азербайджанском языке для канала Disli Hardz. Работай в текущей папке репозитория.
+Write a short finance-video script in Azerbaijani for the Disli Hardz channel.
 
-Прочитай обязательно: AGENTS.md (правила канала) и work/trend.json, work/transcript.txt (источник идеи).
+Read first: `AGENTS.md` (channel rules), `work/trend.json`, and `work/transcript.txt` (source of the idea).
 
-Правила:
-- Источник — только идея и факты. Формулировки, структуру реплик, музыкальные метки и кадры не копируй. Пиши свой текст.
-- Факты и цифры проверь сам (например, сложные проценты: считай явно). Не выдумывай данных.
-- Не давай персональных инвестиционных советов. Общая образовательная подача допустима.
-- Аудитория — широкая. Простой язык, понятные примеры.
-- Нецензурная брань удаляется из сценария полностью: переписывай фразу без мата, не заменяй синонимами-«смягчениями».
+Rules:
+- Use the source only for ideas and facts. Do not copy its wording, dialogue structure, music cues, or shots. Write original text.
+- Verify facts and figures yourself (for example, calculate compound interest explicitly). Do not invent data.
+- Do not give personalized investment advice. General educational content is allowed.
+- The audience is broad. Use simple language and clear examples.
+- Remove profanity completely: rewrite the sentence without profanity; do not replace it with euphemisms.
 
-Напиши файл work/script.json (UTF-8, поля ровно такие):
+Write `work/script.json` in UTF-8 with exactly these fields:
+```json
 {
-  "source_url": "из work/trend.json",
-  "title_az": "Başlıq: до 90 символов",
-  "cover_prompt_az": "Örtük üçün prompt: промпт обложки 9:16 по-азербайджански, в стиле ролика, текст ниже середины кадра, декоративная типографика",
-  "description_az": "Təsvir: 2–4 предложения, затем РОВНО 5 хэштегов (#...)",
-  "narration_az": "озвучка, 80–110 слов, примерно 40–55 секунд",
-  "key_facts": ["проверенные цифры и факты, которые использованы"]
+  "source_url": "from work/trend.json",
+  "title_az": "Başlıq: up to 90 characters",
+  "cover_prompt_az": "Örtük üçün prompt: an Azerbaijani 9:16 cover prompt in the video's style, text below the frame center, decorative typography",
+  "description_az": "Təsvir: 2–4 sentences, then EXACTLY 5 hashtags (#...)",
+  "narration_az": "voiceover, 80–110 words, about 40–55 seconds",
+  "key_facts": ["verified figures and facts used"]
 }
+```
 
-После записи проверь JSON командой: python -c "import json;json.load(open('work/script.json',encoding='utf-8'));print('ok')"
-и количество хэштегов в description_az (должно быть 5).
+After saving, validate the JSON with `python -c "import json;json.load(open('work/script.json',encoding='utf-8'));print('ok')"` and confirm there are exactly five hashtags in `description_az`.
 
-Ничего не отправляй в Telegram. Не коммить в git. Ответь коротко: путь к файлу и список key_facts.
+Do not send anything to Telegram or commit. Briefly report the file path and list `key_facts`.
