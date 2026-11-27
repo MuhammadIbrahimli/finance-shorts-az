@@ -1,30 +1,32 @@
-Ты пишешь сценарий короткого ролика для канала Daxilde на азербайджанском языке. Работай в текущей папке репозитория.
+Write a short-video script in Azerbaijani for the Daxilde channel. Work in the repository's current directory.
 
-Обязательно прочитай перед работой:
-1. channels/daxilde/AGENTS.md — правила канала (тема: психология, нейробиология, здоровье; стиль, субтитры, выдача, нецензурная брань).
-2. work/trend.json — выбранный TikTok-ролик-источник (канал, ссылка, просмотры).
-3. work/transcript.txt — текст этого ролика, полученный через vidIQ. Это источник идеи и фактов.
+Read first:
+1. `channels/daxilde/AGENTS.md` — channel rules (topics: psychology, neuroscience, health; style, subtitles, delivery, profanity).
+2. `work/trend.json` — selected source TikTok video (channel, link, views).
+3. `work/transcript.txt` — transcript obtained through vidIQ; source of the idea and facts.
 
-Правила сценария:
-- Источник — только идея и факты. Формулировки, порядок реплик и структуру не копируй. Пиши свой текст.
-- Нецензурная брань удаляется полностью: фраза переписывается без неё, без синонимов-«смягчений» и без звёздочек.
-- Факты, цифры и названия проверь. Не выдумывай исследований и цифр. Если утверждение спорно, пиши «по некоторым данным» или не включай.
-- Без медицинских советов и диагнозов; без призывов принимать препараты.
-- Аудитория — широкая, простой язык, один главный образ на фразу.
+Script rules:
+- Use the source only for ideas and facts. Do not copy its wording, dialogue order, or structure. Write original text.
+- Remove profanity completely: rewrite the sentence without it, without euphemistic substitutes or asterisks.
+- Verify facts, numbers, and names. Do not invent studies or figures. Qualify disputed claims with “according to some sources” or omit them.
+- No medical advice or diagnoses; do not urge viewers to take medication.
+- The audience is broad. Use simple language and one central image per phrase.
 
-Напиши work/script.json (UTF-8, поля ровно такие):
+Write `work/script.json` in UTF-8 with exactly these fields:
+```json
 {
-  "source_url": "из work/trend.json",
-  "theme": "психология | нейробиология | здоровье",
-  "accent": "amber | red | cyan | peach | mint  (акцент сцены по правилам канала)",
-  "title_az": "Başlıq: до 90 символов",
-  "cover_prompt_az": "Örtük üçün prompt: промпт обложки 9:16 в стиле «Тетрадь Кахаля», текст ниже середины кадра, декоративная типографика (см. правила канала)",
-  "description_az": "Təsvir: 2–4 предложения, затем РОВНО 5 хэштегов (#...)",
-  "narration_az": "озвучка, 80–110 слов, примерно 40–55 секунд",
-  "key_facts": ["проверенные факты и цифры, которые использованы"],
-  "metaphors": ["3–5 образов для сцен"]
+  "source_url": "from work/trend.json",
+  "theme": "psychology | neuroscience | health",
+  "accent": "amber | red | cyan | peach | mint (scene accent per channel rules)",
+  "title_az": "Başlıq: up to 90 characters",
+  "cover_prompt_az": "Örtük üçün prompt: a 9:16 cover prompt in the Kahlo's Notebook style, text below the frame center, decorative typography (see channel rules)",
+  "description_az": "Təsvir: 2–4 sentences, then EXACTLY 5 hashtags (#...)",
+  "narration_az": "voiceover, 80–110 words, about 40–55 seconds",
+  "key_facts": ["verified facts and figures used"],
+  "metaphors": ["3–5 visual metaphors for scenes"]
 }
+```
 
-После записи проверь JSON: python -c "import json;json.load(open('work/script.json',encoding='utf-8'));print('ok')", и что в description_az ровно 5 хэштегов.
+After saving, validate the JSON with `python -c "import json;json.load(open('work/script.json',encoding='utf-8'));print('ok')"` and confirm that `description_az` has exactly five hashtags.
 
-Ничего не отправляй в Telegram и не коммить в git. Ответь коротко: путь к файлу и список key_facts.
+Do not send anything to Telegram or commit. Briefly report the file path and list `key_facts`.
