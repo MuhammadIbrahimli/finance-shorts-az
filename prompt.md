@@ -1,12 +1,12 @@
-# Ежедневный запуск: финансовое Short-видео на азербайджанском (канал Disli Hardz)
+# Daily Run: Azerbaijani Finance Short (Disli Hardz)
 
-Ты работаешь в клоне репозитория `finance-shorts-az` в облачной рутине. Один запуск = один ролик. Перед началом прочитай `AGENTS.md` (через `CLAUDE.md`): это постоянные правила канала (формат, стиль, субтитры, проверка, выдача). Они имеют приоритет над скиллом `.claude/skills/vizavi-motion`, если расходятся (например, музыка: её нет).
+You are working in a cloud routine inside a clone of `finance-shorts-az`. One run produces one video. Before starting, read `AGENTS.md` (included through `CLAUDE.md`). Those persistent channel rules cover format, style, subtitles, review, and deliverables. They take precedence over `.claude/skills/vizavi-motion` where they conflict; for example, this channel has no music.
 
-Публиковать видео где-либо **нельзя**. Результат уходит только в Telegram (видео и текст выдачи). Не используй чужие видео как есть: ни кадры, ни звук, ни текст целиком. Используй факты и идеи, переписанные своими словами.
+Do not publish the video elsewhere. Deliver only to Telegram: the video and its publication text. Do not reuse another creator's video, footage, audio, or full script. Use facts and ideas rewritten in your own words.
 
-Ключи и токены — только из переменных окружения. Не печатай их, не записывай в файлы и не коммить.
+Read keys and tokens only from environment variables. Do not print them, write them to files, or commit them.
 
-## 0. Окружение
+## 0. Environment
 
 ```bash
 pip install -r requirements.txt
@@ -14,114 +14,147 @@ playwright install chromium --with-deps
 ffmpeg -version >/dev/null && ffprobe -version >/dev/null || echo "NO FFMPEG"
 ```
 
-Если ffmpeg отсутствует, сразу отправь отчёт об ошибке (раздел «Ошибки») и остановись.
+If ffmpeg is unavailable, send an error report (see “Errors”) and stop.
 
-Переменные: `YOUTUBE_API_KEY`, `GEMINI_API_KEY`, `TG_TOKEN`, `TG_CHAT_ID`. Опционально: `GEMINI_TTS_MODEL`, `GEMINI_TTS_VOICE`, `WHISPER_MODEL` (по умолчанию `medium`), `RENDER_FPS` (по умолчанию 24).
+Required variables: `YOUTUBE_API_KEY`, `GEMINI_API_KEY`, `TG_TOKEN`, and `TG_CHAT_ID`. Optional: `GEMINI_TTS_MODEL`, `GEMINI_TTS_VOICE`, `WHISPER_MODEL` (default `medium`), and `RENDER_FPS` (default 24).
 
-Все промежуточные файлы — в `work/`. Эта папка не коммитится.
+Store all temporary files in `work/`. This directory is not committed.
 
-## Порядок
+## Workflow
 
-Шаги выполняются по порядку. Если шаг упал, отправь отчёт об ошибке и остановись:
-`python scripts/notify.py --error --step "<номер и название>" --message "<причина, 1–3 предложения>"`
+Perform the steps in order. If a step fails, send an error report and stop:
 
-### 1. Тренд
+```bash
+python scripts/notify.py --error --step "<step number and name>" --message "<reason in 1–3 sentences>"
+```
+
+### 1. Find a trend
+
 ```bash
 python scripts/find_trend.py
 ```
-Выбирает самое просматриваемое финансовое Short (≤90 с, не старше 14 дней, нет в `used.json`). Пишет `work/trend.json` и добавляет id в `used.json`.
 
-### 2. Транскрипт
-Если подключён коннектор vidIQ с инструментом `video_transcript`, вызови его для `url` из `work/trend.json` и сохрани текст без таймкодов в `work/vidiq_transcript.txt`. Затем:
+The script selects the most-viewed eligible finance Short (up to 90 seconds, posted within 14 days, and not already listed in `used.json`). It writes `work/trend.json` and adds the selected ID to `used.json`.
+
+### 2. Get a transcript
+
+If the vidIQ connector and its `video_transcript` tool are available, call it for the URL in `work/trend.json` and save text without timestamps to `work/vidiq_transcript.txt`. Then run:
+
 ```bash
 python scripts/transcript.py
 ```
-Скрипт возьмёт vidIQ-файл, если он есть, иначе субтитры YouTube. Если транскрипт короче 300 символов или его нет, это ошибка: не придумывай текст.
 
-### 3. Сценарий, перевод, выдача (пишешь ты)
-Прочитай `work/transcript.txt` и `work/trend.json`. Напиши `work/script.json`:
+The script uses the vidIQ transcript if present; otherwise it tries YouTube captions. A missing transcript or one shorter than 300 characters is an error. Do not invent transcript text.
+
+### 3. Write the script, translation, and deliverables
+
+Read `work/transcript.txt` and `work/trend.json`. Write `work/script.json` with exactly these fields:
+
 ```json
 {
-  "source_url": "из trend.json",
-  "title_az": "Başlıq: до 90 символов",
-  "cover_prompt_az": "Örtük üçün prompt: промпт обложки 9:16 в стиле видео, текст ниже середины кадра, декоративная типографика (см. AGENTS.md)",
-  "description_az": "Təsvir: 2–4 предложения по сути видео, затем ровно 5 хэштегов",
-  "narration_az": "текст озвучки, 90–130 слов, примерно 30–50 секунд",
-  "key_facts": ["факты и числа из источника, которые сохранены"]
+  "source_url": "from trend.json",
+  "title_az": "Başlıq: up to 90 characters",
+  "cover_prompt_az": "Örtük üçün prompt: a 9:16 cover prompt in the video's style, with text below the middle and decorative typography; see AGENTS.md",
+  "description_az": "Təsvir: 2–4 sentences about the video, followed by exactly five hashtags",
+  "narration_az": "90–130 words of narration, about 30–50 seconds",
+  "key_facts": ["source facts and figures retained"]
 }
 ```
-Правила:
-- Передавай смысл, факты и цифры точно. Числа, проценты, даты не меняй.
-- Формулировки пиши свои, не копируй предложения. Структуру идеи можно сохранить.
-- Если утверждение нельзя проверить, пиши «по данным источника» или не включай.
-- Не давай персональных инвестиционных советов. Не говори «покупайте» про конкретные активы.
-- Азербайджанский: ə, ı, ö, ü, ş, ç, ğ.
-- Описание содержит ровно 5 хэштегов (`#...`), иначе отправка остановится.
 
-### 4. Озвучка
+Rules:
+
+- Preserve the source's meaning, facts, and numbers. Do not change figures, percentages, or dates.
+- Write new phrasing; do not copy sentences. The idea structure may remain similar.
+- If a claim cannot be verified, qualify it as “according to the source” or omit it.
+- Do not give personalized investment advice or tell viewers to buy a specific asset.
+- Write Azerbaijani with correct characters: ə, ı, ö, ü, ş, ç, ğ.
+- `description_az` must contain exactly five hashtags; otherwise sending will stop.
+
+### 4. Create narration audio
+
 ```bash
 python scripts/tts.py          # work/narration.wav (Gemini TTS)
-python scripts/trim.py         # work/narration_trim.wav (паузы >0.4 с -> 0.2 с)
-python scripts/align_words.py  # work/words.json (тайминги слов сценария)
+python scripts/trim.py         # work/narration_trim.wav (pauses >0.4 s become 0.2 s)
+python scripts/align_words.py  # work/words.json (script word timings)
 ```
-Проверь длительность `work/narration_trim.wav` (ffprobe). Если она вне 20–60 с, перепиши `narration_az` и повтори шаги 4 (озвучка, обрезка и выравнивание).
 
-### 5. Раскадровка
-Напиши `work/storyboard.md`: таблица `таймкод | фраза | что видно | план/ракурс | движение`. Покрой всю озвучку по словам из `work/words.json`. Каждая фраза — своя среда, люди без лиц, полноценные фигуры, действие читается. Никакой музыки.
+Check `work/narration_trim.wav` duration with ffprobe. If it is outside 20–60 seconds, rewrite `narration_az` and repeat audio synthesis, trimming, and alignment.
 
-### 6. Сцена
-Сделай `work/scene/index.html` по `templates/scene_template.html`:
-- `window.DURATION_SEC` = длительность озвучки + 1.2 с;
-- `window.WORDS` = содержимое `work/words.json` (вставь массив в файл);
-- `window.renderAt(t)` рисует кадр в стиле бумажного коллажа по `AGENTS.md`. Сохрани `drawSubtitles(t)` поверх кадра (караоке, плашка y≈1540).
+### 5. Storyboard
 
-Ориентир стиля: `references/2d-video/sheets/sheet_02.png`, `references/2d-video/AGENTS.md`.
+Write `work/storyboard.md` as a table: `timecode | phrase | what is visible | shot/camera | movement`. Cover the entire narration using the timings in `work/words.json`. Give every phrase its own environment. Characters must be full, faceless figures and actions must read clearly. Do not add music.
 
-### 7. Рендер
+### 6. Build the scene
+
+Create `work/scene/index.html` from `templates/scene_template.html`:
+
+- Set `window.DURATION_SEC` to narration duration plus 1.2 seconds.
+- Set `window.WORDS` to the contents of `work/words.json`.
+- Implement `window.renderAt(t)` in the paper-collage style described in `AGENTS.md`.
+- Keep `drawSubtitles(t)` over the rendered frame (karaoke captions, panel around y≈1540).
+
+Style references: `references/2d-video/sheets/sheet_02.png` and `references/2d-video/AGENTS.md`.
+
+### 7. Render
+
 ```bash
 python scripts/render.py       # work/video.mp4, 1080x1920, 24 fps
 ```
-Если рендер упал, исправь сцену и повтори только этот шаг (не больше двух раз).
 
-### 8. Контроль качества (обязательно)
+If rendering fails, fix the scene and retry this step only, no more than twice.
+
+### 8. Quality review (required)
+
 ```bash
 python tools/make_review_sheets.py work/video.mp4 work/review
 ```
-Затем запусти три субагента из `.claude/agents/` и передай им пути `work/` и `work/review/`:
-- `video-quality-reviewer`: смысл, анатомия, движение, соответствие словам, технические параметры;
-- `art-director`: стиль бумажного коллажа, цвет, детали, композиция;
-- `subtitle-auditor`: караоке, границы слов, текст, плашка.
 
-Исправь все замечания MAJOR/FAIL, пересобери затронутые сцены и повтори проверку. Если субагенты недоступны, проверь сам и явно сообщи в отчёте, что независимая проверка не проводилась.
+Then run the three independent agents from `.claude/agents/`, giving them paths to `work/` and `work/review/`:
 
-Проверка финала:
+- `video-quality-reviewer`: meaning, anatomy, movement, matching frames to words, technical properties
+- `art-director`: paper collage style, color, detail, composition
+- `subtitle-auditor`: karaoke timing, word boundaries, text, and panel
+
+Fix every MAJOR/FAIL issue, rebuild affected scenes, and repeat the review. If the agents are unavailable, check the video yourself and say that independent review was not performed.
+
+Inspect the final file:
+
 ```bash
 ffprobe -v error -show_entries stream=codec_name,width,height,r_frame_rate,pix_fmt -show_entries format=duration -of default=nw=1 work/video.mp4
 ```
-Ожидаемо: h264, 1080, 1920, 24/1, yuv420p, есть аудио AAC, длительность = озвучка + хвост.
 
-### 9. Отправка в Telegram
+Expected: H.264, 1080×1920, 24/1 fps, yuv420p, AAC audio, and duration equal to the narration plus tail.
+
+### 9. Send to Telegram
+
 ```bash
 python scripts/notify.py
 ```
-Отправляется видео и текст выдачи (Başlıq, Örtük üçün prompt, Təsvir). Ничего другого.
 
-### 10. Сохранение used.json
-`find_trend.py` уже обновил `used.json`. Закоммить и отправь в `main` только его:
+Only the video and the publication text (Başlıq, Örtük üçün prompt, Təsvir) are sent.
+
+### 10. Save the used-video record
+
+`find_trend.py` has already updated `used.json`. Commit and push only that file to `main`:
+
 ```bash
 git config user.name "finance-shorts-bot"
 git config user.email "finance-shorts-bot@users.noreply.github.com"
 git add used.json
-git commit -m "Mark video as used: <video_id из work/trend.json>"
+git commit -m "Mark video as used: <video_id from work/trend.json>"
 git push origin HEAD:main
 ```
-Не коммить `work/`, не создавай ветки и PR.
 
-## Ошибки
+Do not commit `work/`, create a branch, or open a pull request.
+
+## Errors
+
 ```bash
-python scripts/notify.py --error --step "<шаг>" --message "<что случилось>"
+python scripts/notify.py --error --step "<step>" --message "<what happened>"
 ```
-Не выдавай заглушку за готовое видео. Если что-то не получилось, пиши об этом прямо.
 
-## Итог запуска
-В конце коротко: ссылка на источник, источник транскрипта (`vidiq` или `youtube_captions`), длительность, результат проверок (какие субагенты запускались и что нашли), отправлено ли в Telegram, что не проверено.
+Do not present a placeholder as a finished video. State clearly if anything failed.
+
+## Run summary
+
+Briefly report the source link, transcript source (`vidiq` or `youtube_captions`), duration, review results (which agents ran and what they found), whether Telegram delivery succeeded, and what was not checked.
