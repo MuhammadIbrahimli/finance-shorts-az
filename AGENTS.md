@@ -1,74 +1,87 @@
-# Инструкции для агентов — финансовые Shorts на азербайджанском (канал Disli Hardz)
+# Agent Instructions — Azerbaijani Finance Shorts (Disli Hardz)
 
-Эти правила перенесены из личной папки `claude-video` владельца и адаптированы под облачную рутину. Они постоянные: применяются ко всем роликам этого репозитория без повторных вопросов. Явный бриф текущего запуска меняет только этот ролик.
+These persistent rules apply to every video in this repository. A specific brief can override them for that video only. This repo serves the Disli Hardz finance channel; if a brief names another channel, stop because this repo is not configured for it.
 
-Канал: **Disli Hardz** (финансы). Для него действуют правила ниже (стиль «бумажный коллаж»). Если в брифе назван другой канал, этот репозиторий его не обслуживает.
+## Files and output
 
-## Где что лежит
-- Рабочая папка одного запуска: `work/` (в git не коммитится). Всё для ролика — сценарий, озвучка, транскрипт, слова, сцена, кадры для проверки — там.
-- Итоговое видео: `work/video.mp4`. Во время запуска в `work/` только готовый MP4 и файлы, нужные для повторной сборки. Черновики, контактные листы и кадры удаляй после проверки.
-- Шаблон сцены: `templates/scene_template.html`. Конфигурация и пути: `scripts/common.py`.
-- Агенты проверки: `.claude/agents/`. Образцы стиля: `references/2d-video/` (AGENTS и промпт качества 2D-проекта, два контактных листа).
-- Старые неудачные версии сцен не держать: после принятия новой удалять.
+- Each run uses `work/`, which is not committed. Keep the script, voiceover, transcript, word timings, storyboard, and review frames there.
+- The final video is `work/video.mp4`. After review, keep only the MP4 and files required to reproduce it; remove drafts, contact sheets, and temporary frames.
+- The scene template is `templates/scene_template.html`; shared paths and configuration are in `scripts/common.py`.
+- Review agents live in `.claude/agents/`. The 2D reference material is in `references/2d-video/`.
+- Remove superseded scene drafts after accepting a replacement.
 
-## Формат (обязательно)
-- **9:16 вертикальное, 1080×1920**, **24 fps**, H.264, yuv420p, AAC.
-- Кодирование финала: libx264 `-preset slow -crf 22` (`scripts/render.py`).
-- Длительность = озвучка + короткий хвост (1–1.5 с).
+## Video format
 
-## Звук (обязательно)
-- Единственный звук — озвучка (Gemini TTS, голос по умолчанию `Kore`). **Без музыки и без добавочных SFX**, пока бриф этого не требует.
-- Скилл `vizavi-motion` по умолчанию предлагает музыку и звуковой дизайн. Для этого канала это правило **переопределено**: музыки нет.
-- Паузы: по требованию владельца конвейера пауses длиннее 0.4 с сокращаются до 0.2 с (`scripts/trim.py`). Это единственное изменение озвучки; текст и скорость не меняются.
+- Vertical 9:16, 1080×1920, 24 fps, H.264/yuv420p video, AAC audio.
+- Final encode uses libx264 with `-preset slow -crf 22` via `scripts/render.py`.
+- Duration equals the voiceover plus a 1–1.5 second tail.
 
-## Стиль: бумажный коллаж (обязательно)
-- Образец качества: `references/2d-video/sheets/sheet_02.png` и правила `references/2d-video/AGENTS.md`. 3D-проекты не образец.
-- Всё — вырезанная бумага: зернистая текстура бумаги на каждом элементе, чуть неровные края, мягкие контактные тени между слоями, приглушённая вечерняя палитра (сине-серые стены, песочный, шалфейный, терракотовый, золотой). Никакого «детского мультика»: без ярких градиентов, толстых контуров и кислотных цветов.
-- Каждая смысловая фраза — своя среда с конкретными деталями (мебель, окна, полки, реквизит, свет, тени). Не повторять фон без причины. Глубина: 3+ плана с параллаксом, лёгкое движение камеры, световые пятна, виньетка.
-- Много деталей, но без случайного мусора: текст и числа появляются только когда произносятся.
-- Зерно бумаги умеренное: плотность зерна на элементах ≈ 34 (из 255), общий фон ≈ 11.
+## Audio
 
-## Уроки правок (учитывать сразу)
-- **Субтитры** (вшиты, караоке по словам): шрифт Arial жирный (700), размер 52 px при 1080×1920, не более 3 слов в группе, ширина группы ≤ 820 px, плашка rgba(18,22,28,.5) с радиусом 13 и отступом ≈ 17 px, цвет слов `#f7f2e6`, активное слово `#ffdc45`, без теней. **Центр плашки y≈1540** из 1920. Ниже ≈1600 нельзя: закрывает интерфейс.
-- **Текст субтитров = точно текст сценария** (`work/script.json` → `narration_az`). Тайминги берутся из распознавания озвучки (faster-whisper), слова сценария выравниваются по словам распознавания (`scripts/align_words.py`). Расхождения речи и сценария фиксировать и сообщать.
-- **Ходьба**: фаза шага = пройденное расстояние; ноги двигаются в сторону движения; у разных людей разная скорость (≈120–170 px/с), смещение фазы и старт; не синхронно. Руки качаются противоположно ногам. Скорость постоянна (≈230 px/с), без разгона посреди сцены; остановка — плавное короткое торможение. Герои не слипаются: расстояние ≥ ширины корпуса.
-- **Предметы стоят на опоре**: ноутбук, банки, посуда на столе (низ предмета = верх столешницы), ничего не «висит в воздухе».
-- **Руки не проваливаются** в мебель и текстуры; жест «думаю» — кисть у щеки. Подсказки («?», «!») — рядом с головой героя, не на окнах и картинах.
-- **Персонаж не исчезает без причины**: если участвует в диалоге, остаётся до конца сцены.
-- **Детали сцен**: каждая локация насыщена. Пустые фоны — дефект.
-- Названия брендов брать из сценария (например «Hyper Agency»).
+The only audio is the narration (Gemini TTS, default voice `Kore`). Do not add music or extra sound effects unless the current brief explicitly requires them.
 
-## Персонажи (обязательно)
-- Полноценные люди: голова БЕЗ черт лица, шея, плечи, одежда с деталями (воротник, пуговицы, манжеты), руки с кистями, ноги, обувь. Одежда и причёска одинаковы во всех сценах.
-- Анатомия правдоподобна: руки крепятся к плечам, двухзвенные (плечо–локоть–кисть), достижимость ограничена, локти естественно вниз и наружу. ЗАПРЕЩЕНЫ вывернутые, торчащие, растянутые или отрезанные конечности, парение, пересечение тела с предметами, ноги и руки сквозь стол. Люди за столом или прилавком рисуются ПОЗАДИ него.
-- Действие читается: передача предмета — предмет реально летит из руки в руку; бросок — по дуге; ходьба — смена ног.
-- Предмет не закрывает голову героя.
+The `vizavi-motion` skill may normally suggest music and sound design; this channel overrides that default: no music.
 
-## Процесс (обязательно)
-1. **Озвучка**: синтез Gemini TTS по `narration_az` → пауза-обрезка (`trim.py`) → распознавание (faster-whisper `medium`, язык `az` явно) → выравнивание слов сценария → `work/words.json`.
-2. **Раскадровка** по реальным таймкодам: фраза → среда → действие → камера. Таблица `таймкод | фраза | что видно | план | движение` — в `work/storyboard.md`.
-3. **Сборка**: HTML/Canvas, кадр = функция времени `window.renderAt(t)`; статичные слои кешируются; рендер headless Chromium + ffmpeg (`scripts/render.py`).
-4. **Контроль качества — обязательно до сдачи**: запусти независимых субагентов из `.claude/agents/`:
-   - `video-quality-reviewer` — смысл, анатомия, движение, физика, соответствие кадров словам;
-   - `art-director` — стиль бумажного коллажа, цвет, детали, композиция;
-   - `subtitle-auditor` — караоке: границы слов, текст, читаемость, плашка.
-   Передавай им путь к `work/` и к листам (`tools/make_review_sheets.py`). Исправь все замечания уровня FAIL/MAJOR и повтори проверку затронутых сцен. Если субагенты недоступны — выполни ту же проверку сам и честно скажи об этом.
-5. **Проверка финального MP4**: кодек, 1080×1920, 24 fps, число кадров = длительность × 24, длительность = озвучка + хвост, аудио AAC есть, начало/конец/стыки сцен, разность соседних кадров (нет «дёргов»).
-6. **Очистка**: в `work/` оставить только `video.mp4` и файлы для повторной сборки; временное удалить.
-7. **Отчёт честный**: что проверено глазами и по цифрам, что нет (движение и звук в реальном времени агент не воспринимает).
+Per the pipeline owner's requirement, pauses longer than 0.4 seconds are shortened to 0.2 seconds by `scripts/trim.py`. Do not change the words or narration speed.
 
-## Выдача (обязательно, на азербайджанском)
-Текст выдачи готовит Claude и сохраняет в `work/script.json`:
-1. **Başlıq** — название: короткое, цепляющее, по теме, без ложного кликбейта.
-2. **Örtük üçün prompt** — промпт для генерации обложки 9:16 в ТОМ ЖЕ стиле, что и видео (палитра, свет, атмосфера, метафоры ролика). ТЕКСТ НА ОБЛОЖКЕ: ниже середины кадра (примерно 55–75% высоты), декоративная выразительная типографика в стиле ролика (объёмные, светящиеся, вырезанные из бумаги, каллиграфия; с контуром, тенью или свечением), **не** системный шрифт. Указать: какой текст, где и каким эффектом.
-3. **Təsvir** — 2–4 предложения по сути видео и ровно **5 хэштегов**.
-Ничего лишнего в этот блок не добавлять.
+## Visual style: paper collage
 
-## Отправка в Telegram (обязательно после сдачи)
-- Пользователь получает результат в свой Telegram. Постоянное разрешение пользователя: после приёма и проверки видео отправляется **видео и блок выдачи** (`scripts/notify.py`). Ничего другого туда не отправлять; источник и технический отчёт — только в ответе рутины.
-- Токен бота и id чата — только в переменных окружения (`TG_TOKEN`, `TG_CHAT_ID`). Не печатать, не записывать в файлы репозитория, логи и ответы.
-- Если отправка невозможна (нет переменных, видео больше 50 МБ), не выдумывать обходов: сообщить в ответе, что нужно сделать.
+- Use `references/2d-video/sheets/sheet_02.png` and `references/2d-video/AGENTS.md` as references. 3D projects are not the style reference.
+- Everything should look like layered cut paper: visible paper grain, slightly irregular edges, soft contact shadows, and a muted evening palette (blue-gray, sand, sage, terracotta, gold). Avoid a childish cartoon look, bright gradients, thick outlines, and neon colors.
+- Give each meaningful phrase its own environment with concrete objects, furniture, windows, shelves, lighting, and shadows. Do not reuse a background without a story reason.
+- Build depth with at least three parallax planes, subtle camera movement, light pools, and a vignette.
+- Add detail without random clutter. Text and numbers appear only when the narration mentions them.
+- Use moderate paper grain: roughly 34/255 on elements and 11/255 on the overall background.
 
-## Окружение рутины
-- Linux (Ubuntu) в облаке. Нужны ffmpeg, Python 3, Chromium (`playwright install chromium --with-deps`) и зависимости из `requirements.txt`.
-- Для отладки на Windows поднимается та же схема, путь к Chromium задаётся через Playwright.
+## Lessons from previous revisions
+
+- **Subtitles:** burned-in word-by-word karaoke. Use Arial Bold (700), 52 px at 1080×1920, at most three words per group, group width no more than 820 px, background `rgba(18,22,28,.5)`, radius 13 px, padding about 17 px. Text is `#f7f2e6`; the active word is `#ffdc45`; no text shadow. Center the panel around y≈1540. Do not place it below about y=1600, where it can cover interface controls.
+- **Subtitle text must exactly match** `work/script.json` → `narration_az`. Timing comes from speech recognition (faster-whisper); align the script words to recognized speech using `scripts/align_words.py`. Record and report any mismatch between the voice and script.
+- **Walking:** step phase follows distance traveled; legs move in the direction of travel. Vary speed (about 120–170 px/s), phase, and start times between people. Arms swing opposite to the legs. Keep walking speed constant (about 230 px/s); do not accelerate mid-scene. Use a short smooth deceleration when stopping. Keep characters at least one body-width apart.
+- **Objects rest on surfaces:** laptops, jars, and dishes sit on tables; the bottom of an object meets the tabletop. Do not make objects float.
+- Keep hands out of furniture and surfaces. A thinking gesture places the hand near the cheek. Question/exclamation marks appear near a character's head, not on windows or paintings.
+- A character in a conversation remains present until the scene ends.
+- Each location needs meaningful detail; empty backgrounds are defects.
+- Use brand names from the script (for example, “Hyper Agency”).
+
+## Characters
+
+Characters are full human figures without facial features: head, neck, shoulders, detailed clothing, hands, legs, and shoes. Keep clothes and hairstyles consistent between scenes.
+
+Use plausible anatomy: arms attach to shoulders and have upper arm, forearm, and hand; reach is limited; elbows point naturally down or outward. Do not draw twisted, protruding, stretched, or cut-off limbs, floating bodies, or limbs crossing furniture. People seated at a table or counter must be behind it.
+
+Make actions readable: an object being handed over must visibly travel from one hand to the other; a thrown object follows an arc; walking shows alternating legs. Objects must not cover a character's head.
+
+## Workflow
+
+1. **Narration:** synthesize Gemini TTS from `narration_az`; trim long pauses with `trim.py`; transcribe with faster-whisper `medium`, explicitly using language `az`; align script words and write `work/words.json`.
+2. **Storyboard:** use real word timings to map each phrase to an environment, action, and camera. Save a `timecode | phrase | what is visible | shot | movement` table in `work/storyboard.md`.
+3. **Build the scene:** use HTML/Canvas and make each frame a function of time (`window.renderAt(t)`). Cache static layers and render with headless Chromium plus ffmpeg.
+4. **Quality review before delivery:** run the independent agents in `.claude/agents/`:
+   - `video-quality-reviewer` — meaning, anatomy, movement, physics, and matching frames to narration
+   - `art-director` — paper-collage style, color, detail, and composition
+   - `subtitle-auditor` — karaoke timing, word boundaries, text, and readability
+   Give them the `work/` path and review sheets from `tools/make_review_sheets.py`. Fix every FAIL/MAJOR issue and rerun review for affected scenes. If the agents are unavailable, perform the same checks yourself and say independent review was not performed.
+5. **Inspect the final MP4:** verify codec, 1080×1920, 24 fps, frame count equals duration × 24, duration equals narration plus tail, AAC audio is present, scene boundaries, start/end, and neighboring-frame differences for unintended jumps.
+6. **Clean up:** leave only `video.mp4` and reproducibility files in `work/`; remove temporary material.
+7. **Report honestly:** state which visual and numeric checks were performed and which were not. The agent cannot perceive motion and sound in real time from a contact sheet.
+
+## Deliverables (Azerbaijani)
+
+Write the publication text in `work/script.json`, in Azerbaijani:
+
+1. **Başlıq:** short, relevant, engaging, without misleading clickbait.
+2. **Örtük üçün prompt:** a 9:16 cover-image prompt in the same visual style, palette, lighting, atmosphere, and metaphors as the video. Specify the exact cover text, its placement around 55–75% of frame height, and decorative typography (paper-cut, dimensional, illuminated, or calligraphic). Do not request a generic system font.
+3. **Təsvir:** 2–4 sentences describing the video and exactly five hashtags.
+
+Do not add unrelated material to this deliverables block.
+
+## Telegram delivery
+
+After the video is accepted and checked, send only the video and deliverables text through `scripts/notify.py`. Do not send source information or technical reports to Telegram; include those in the run report.
+
+Use `TG_TOKEN` and `TG_CHAT_ID` only from environment variables. Never print or store them in repository files, logs, or responses. If delivery is unavailable because variables are missing or the file exceeds 50 MB, report that; do not invent a workaround.
+
+## Routine environment
+
+The cloud routine runs Linux/Ubuntu. It requires ffmpeg, Python 3, Chromium (`playwright install chromium --with-deps`), and packages from `requirements.txt`. For Windows debugging, use Playwright with the configured Chromium executable.
