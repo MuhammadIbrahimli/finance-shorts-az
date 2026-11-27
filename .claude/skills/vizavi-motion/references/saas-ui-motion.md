@@ -1,49 +1,49 @@
-# SaaS/UI motion — продуктовая анимация интерфейса
+# SaaS/UI Motion — Product Interface Animation
 
-Условный модуль внутри `vizavi_motion`, не отдельный устанавливаемый навык. Применяй к демонстрации продукта, интерфейса или соответствующим частям учебного демо. Здесь SaaS/UI motion — краткое название постановки интерфейса, а не утверждение, что бизнес-модель SaaS задаёт строгий художественный стиль.
+An optional module within vizavi_motion, not a separately installable skill. Apply it to product/interface demonstrations or relevant parts of a tutorial demo. SaaS/UI motion is shorthand for staging an interface; it does not mean that the SaaS business model imposes a strict art style.
 
-## Происхождение и границы
+## Origin and scope
 
-Адаптировано из пользовательских архивов `higgsfield-motion-saas.skill` и `higgsfield-motion.skill`, переданных 15.10.2026; оба файла получены и прочитаны для этой редакции. Это не заявление об официальном авторстве Higgsfield. Точки сверки внутри исходников: `higgsfield-motion/references/production-lessons.md`, строки 318–325 и 351–375; `higgsfield-motion-saas/references/client-taste.md`, строка 63; `higgsfield-motion-saas/references/transitions.md`, строки 45–68 и 95–100; `higgsfield-motion-saas/references/techniques.md`.
+Adapted from user-provided archives higgsfield-motion-saas.skill and higgsfield-motion.skill, received on 2026-10-15; both files were received and read for this revision. This is not a claim of official Higgsfield authorship. Source pointers: higgsfield-motion/references/production-lessons.md, lines 318–325 and 351–375; higgsfield-motion-saas/references/client-taste.md, line 63; higgsfield-motion-saas/references/transitions.md, lines 45–68 and 95–100; higgsfield-motion-saas/references/techniques.md.
 
-В `techniques.md` названы уроки MahdiEdits «Top 3 Most Used SaaS Video Transitions», «Overlapping Keyframes» и «Overlapping Keyframes in 3D», но их публичные URL не подтверждены. Указанные в архиве статусы измерений/просмотра принадлежат его автору и независимо здесь не проверялись. Переносим принципы, не чужие реализации, фирменную палитру, проектные вкусы, обязательную длительность, BPM, движок или установку инструментов. Правила пространственных режимов и учебного демо ниже дополнены текущим заданием пользователя.
+techniques.md names MahdiEdits lessons “Top 3 Most Used SaaS Video Transitions”, “Overlapping Keyframes”, and “Overlapping Keyframes in 3D”, but their public URLs are unconfirmed. Measurement/viewing status in the archives belongs to their author and was not independently verified here. Adapt principles, not other people's implementations, branded palettes, project preferences, mandatory duration, BPM, engine, or tool installation. The spatial-mode and tutorial-demo rules below were supplemented by the current user request.
 
-## Действие и результат
+## Action and result
 
-Для каждого эпизода выбери понятную задачу: выбрать элемент, изменить настройку, перетащить карточку, перестроить панель, запустить процесс или показать результат. Показывай единое правдоподобное приложение с последовательными данными и состояниями, а не независимую декоративную карточку под новым заголовком в каждой сцене. Сохраняй иерархию cards/panels/buttons, единые радиусы, тени и толщины линий. В одном действии выделяй немного главных контролов (в источнике ориентир 1–3, не универсальная квота). Демонстрационные данные не выдавай за реальные свойства или метрики существующего сервиса.
+For each segment, choose a clear task: select an item, change a setting, drag a card, rearrange a panel, start a process, or show a result. Show one plausible application with consistent data and states, not an unrelated decorative card with a new heading in every scene. Keep a consistent hierarchy of cards/panels/buttons, corner radii, shadows, and line weights. Highlight only a few main controls in one action (the source suggests 1–3 as a guide, not a universal quota). Do not present demo data as actual attributes or metrics of an existing service.
 
-Курсор ведёт действие: наведение → реакция цели → нажатие/захват → изменение → читаемый результат. Он не должен случайно летать поверх пассивного экрана. Попадание определяется кончиком стрелки/hotspot, не центром спрайта. Перед кликом дай короткое считываемое наведение, после — видимую причинную смену состояния. Курсор остаётся чётким и полностью видимым во время нажатия, не закрывает подпись кнопки, результат или читаемые числа.
+The cursor leads the action: hover → target response → click/grab → change → readable result. It should not fly randomly over a passive screen. The arrow tip/hotspot determines the hit, not the sprite center. Show a brief readable hover before the click and a visible causal state change afterwards. Keep the cursor sharp and fully visible during the click; do not cover the button label, result, or readable numbers.
 
-Состояния кнопки и объекта причинно связаны: hover, pressed/dragging, processing, success/selected или другой осмысленный набор. Не показывай успех до завершения процесса. График, процент и иной индикатор одной операции получают общий прогресс. Монтажно сокращённое ожидание не выдавай за реальную скорость продукта: при необходимости обозначь сокращение/демонстрационный характер.
+Button and object states must be causally connected: hover, pressed/dragging, processing, success/selected, or another meaningful set. Do not show success before processing is complete. A chart, percentage, and other indicators of one operation should share progress. Do not present an editorially shortened wait as the product's real speed; label the compression/demo when needed.
 
-При drag зафиксируй точку захвата и относительное смещение курсор–объект: карточка приподнимается и следует по дуге, зона назначения подсвечивается, при drop карточка мягко уменьшается и встраивается в слот. Follow/lag может передавать вес и инерцию, но не выглядеть потерей захвата: основной объект остаётся управляемым, отстаёт или догоняет обоснованно, соседи реагируют после события. Drop, snap и остаточное затухание завершаются устойчивой понятной раскладкой. Не накладывай одинаковую пружину на все слои.
+For drag, fix the grab point and cursor-object offset: the card lifts and follows an arc, the destination highlights, and on drop the card gently scales down into the slot. Follow/lag may convey weight and inertia, but not loss of control: the main object stays controllable; delay/catch-up should be justified; neighbors react after the event. Drop, snap, and residual damping end in a stable, clear layout. Do not apply the same spring to every layer.
 
-Подбирай длительности и амплитуды под темп, размер кадра и окно чтения. В исходном `client-taste.md` есть пресет перемещения курсора 0,6–0,9 с по небольшой дуге, лёгкого сжатия при клике и восстановления после, с входом/выходом за кадр. Это пример настройки, не универсальный норматив; вход/выход за границы совместим с требованием полной видимости в момент клика. Не переноси численные пресеты механически на каждую сцену.
+Choose duration and amplitude for the pace, frame size, and reading window. The original client-taste.md includes a cursor move preset of 0.6–0.9 s on a small arc, a slight compress on click and recovery afterwards, with entrance/exit beyond the frame. This is an example, not a universal requirement; entering/exiting the frame is compatible with full visibility at click time. Do not mechanically apply numeric presets to every scene.
 
-Покажи немного функциональных микрореакций: подсветка цели, смена состояния, отклик соседней карточки, раскрытие панели. Они поддерживают главный смысл, а не конкурируют с ним. Переход к детали мотивируй действием; текст получает время чтения. Отдельные выразительные склейки, раскрытия и завершения движения связывай с реальными музыкальными/SFX-акцентами по [модулю движения и звука](motion-and-sound.md), а не с каждым битом.
+Use a few functional micro-reactions: target highlight, state change, nearby card response, panel reveal. They support the main point rather than compete with it. Motivate a move to detail through action; leave time to read text. Connect selected expressive cuts, reveals, and movement endings to actual musical/SFX accents according to the [motion and sound module](motion-and-sound.md), not every beat.
 
-При передаче объекта между сценами согласуй его экранную позицию, размер и состояние; не оставляй двойника или призрачный остаток. Результат возникает из вызвавшего его элемента, карточки расходятся по мягким дугам. При morph меняй реальные размеры формы/раскладку, не растягивай весь UI вместе с текстом и радиусами. Сохраняй идентичность интерфейса при переходе от плоского вида к пространственному.
+When an object passes between scenes, align screen position, size, and state; leave no duplicate or ghost remnant. The result should emerge from the element that triggered it; cards spread along soft arcs. During a morph, change real shape/layout dimensions; do not stretch all UI, text, and radii together. Preserve interface identity as it moves from flat to spatial representation.
 
-Камера помогает действию: может следовать за кареткой, приближаться к клику, отъезжать для результата или обходить разнесённые слои. Крупный план даёт прочитать деталь, общий — понять контекст приложения. Выбирай осмысленный жест камеры, а не выполняй все эти движения в каждом эпизоде.
+The camera supports the action: follow the cursor, push toward a click, pull back to show the result, or travel around separated layers. A close-up makes detail readable; a wide shot explains the application context. Choose a motivated camera gesture rather than doing all of these in every segment.
 
-## Один интерфейс в 2D, 2.5D и 3D
+## One interface in 2D, 2.5D, and 3D
 
-| Режим | Что реально должно измениться |
+| Mode | What should actually change |
 |---|---|
-| 2D + SaaS/UI | Плоские панели, карточки, кнопки и содержимое. Объём не имитируется случайной толщиной; действие курсора и смена состояния остаются смысловым центром. |
-| 2.5D + SaaS/UI | Те же плоские панели разнесены по глубине. Камера раскрывает относительное расположение, перспективу, перекрытия и параллакс. Панели не приобретают настоящие боковины или экструзию. |
-| 3D + SaaS/UI | У узнаваемых объектов появляется реальная геометрическая толщина, кромка и боковые поверхности. Объём подтверждают свет, нормали, тени и пространственный обход/пролёт, а не только масштаб или drop shadow. |
+| 2D + SaaS/UI | Flat panels, cards, buttons, and content. Do not imply volume through arbitrary thickness; cursor action and state change remain the semantic focus. |
+| 2.5D + SaaS/UI | The same flat panels are separated in depth. Camera movement reveals relative placement, perspective, occlusion, and parallax. Panels do not gain real sides or extrusion. |
+| 3D + SaaS/UI | Recognizable objects gain real geometric thickness, edges, and sides. Lighting, normals, shadows, and spatial orbit/fly-through establish volume, not just scale or drop shadow. |
 
-Для выбранного учебного демо переноси те же ID объектов, композиционные якоря, цвета, содержание и результат операции между последними тремя частями. Зритель должен увидеть изменение пространственной модели одного интерфейса. Это условие данного демо, не запрет сменить интерфейс в другом брифе.
+For the selected tutorial demo, carry the same object IDs, composition anchors, colors, content, and operation result across the final three segments. The viewer should see one interface's spatial representation change. This is specific to that demo, not a ban on changing the interface in another brief.
 
-## Координаты и воспроизводимость
+## Coordinates and reproducibility
 
-Явно раздели world space UI и screen space overlay. Если курсор работает с объектом в мире, вычисляй его экранную точку из актуальной проекции якоря с учётом камеры, viewport, aspect ratio и масштаба окна. Если курсор целиком экранный, цель также проверяется в той же экранной системе. Не смешивай CSS-пиксели, координаты видеокадра и мировые единицы без преобразования.
+Explicitly separate world-space UI and screen-space overlays. If the cursor interacts with a world object, compute its screen position from the current projection of its anchor, accounting for camera, viewport, aspect ratio, and window scale. If the cursor is fully screen-space, evaluate its target in that same screen system. Do not mix CSS pixels, video-frame coordinates, and world units without conversion.
 
-Экранный лейбл части демо сохраняет позицию и оформление при движении камеры. Плашки у world space объектов могут следовать их проекции; проверь поля, перекрытие, глубину и выход за камеру. Объёмная панель не должна случайно закрывать курсор, который по постановке является overlay, или пересекать обязательный текст.
+The tutorial demo's screen-space segment label keeps its position and style as the camera moves. Labels near world-space objects may follow their projection; check margins, occlusion, depth, and camera exit. A 3D panel must not accidentally cover a cursor staged as an overlay or intersect required text.
 
-Для воспроизводимого видео анимируй курсор, захват, состояния и задержки одним управляемым таймлайном. Реальный пользовательский ввод для проигрывания не требуется. Состояния вычисляй по времени или воспроизводимому bake/replay, включая перемотку назад; не оставляй зависимость от предыдущего mouse event или от числа уже проигранных кадров. Полный функциональный QA быстрых повторных кликов, resize и reduced motion нужен, если создаётся живое приложение; не превращай обычное видеодемо в разработку интерактивного продукта.
+For reproducible video, animate cursor, grabbing, states, and delays on one controlled timeline. Live user input is not needed for playback. Compute state from time or a reproducible bake/replay, including reverse seeking; do not depend on previous mouse events or the number of frames already played. Full functional QA for rapid repeated clicks, resizing, and reduced motion is needed when building a live app; do not turn an ordinary video demo into an interactive-product build.
 
-## Проверка
+## Review
 
-Проверь в темпе и на стыках: понятность действия, точность захвата, завершение drop, синхронность прогресса/состояний, одинаковую идентичность интерфейса там, где она задана, различимость трёх пространственных режимов, проекцию при движении камеры и перемотке, читаемость overlay. Затем проверь финальный декодированный экспорт вместе со звуком. Наличие курсора, translateZ или параметра extrusion в коде не доказывает выполненный визуальный результат.
+At speed and around transitions, check action clarity, grab accuracy, drop completion, synchronized progress/states, consistent interface identity where required, distinction among the three spatial modes, projection during camera movement/seeking, and overlay readability. Then review the final decoded export with sound. A visible cursor, translateZ, or extrusion parameter in the code does not prove the visual result.
