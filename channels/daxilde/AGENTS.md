@@ -1,84 +1,81 @@
-# Daxilde — инструкции для агентов (канал о психологии, нейробиологии, здоровье и уходе за телом)
+# Daxilde — Agent Instructions (Psychology, Neuroscience, Health, and Body Care)
 
-Канал «Daxilde» (азербайджанский язык): тёмная психология, нейробиология, поведенческая психология («почему мы так делаем»), здоровье и уход за телом. Это постоянные правила: применяй ко ВСЕМ запросам «сделай видео» в этой папке без повторных вопросов. Явный новый бриф меняет только текущий ролик.
+Daxilde is an Azerbaijani-language channel about dark psychology, neuroscience, behavioral psychology (“why we do what we do”), health, and body care. Apply these persistent rules to every video request in this folder without asking again. A new explicit brief overrides them only for that video.
 
-Родственный канал «Disli Hardz» (финансы, бумажный коллаж) лежит в папке выше (`..\AGENTS.md`). Технические правила формата, субтитров, звука и проверки здесь НАСЛЕДУЮТСЯ оттуда; отличается визуальный стиль («Тетрадь Кахаля» — гравюра), цвета и звук.
+The related Disli Hardz channel (finance, paper collage) is in the parent folder. Its technical rules for format, subtitles, sound, and review are inherited here; this channel differs in visual style (“Kahlo's Notebook” engraving), colors, and sound.
 
-## Где что лежит
-- Рабочая папка канала: `C:\Users\muham\claude-video\Daxilde`. Всё для проекта (код, озвучка, сценарий, слова с таймкодами) — в `projects\<название>\`.
-- Итоговое видео — только в `videos\` (`videos\<название>.mp4`). В `videos\` ТОЛЬКО готовые видео: никаких кадров, фрагментов, черновиков, аудио, субтитров, контактных листов.
-- Временное (кадры PNG, листы, промежуточные mp4/wav, venv распознавания) — в scratchpad/temp; удалять после проверки. Неудачные версии проектов после принятия новой удалять.
-- Шаблоны инструментов: `tools\templates\` (`render.js` — рендер кадров через puppeteer-core+Chrome; `sfx_base.py` — синтез звуков и микс с речью; `align_script.py`/`mkwords.py` — слова сценария → тайминги). Проверка готового MP4: `tools\make_review_sheets.py`.
+## Project layout
+- Channel workspace: C:\Users\muham\claude-video\Daxilde. Project files (code, narration, script, timed words) belong in projects/<name>/.
+- Final videos go only in videos/ (for example, videos/<name>.mp4). Keep only finished videos there: no frames, clips, drafts, audio, subtitles, contact sheets, or project files.
+- Store temporary PNGs, sheets, intermediate MP4/WAV files, and speech-recognition virtual environments in scratchpad/temp; remove them after review. Remove superseded project versions after accepting a replacement.
+- Tool templates are in tools/templates/: render.js renders frames through puppeteer-core and Chrome; sfx_base.py synthesizes sound effects and mixes them with speech; align_script.py/mkwords.py convert script words to timings. Review finished MP4 files with tools/make_review_sheets.py.
 
-## Формат (обязательно, как в Disli Hardz)
-- **9:16, 1080×1920**, H.264, yuv420p, AAC, **24 fps**. Кодирование финала: libx264 `-preset slow -crf 22` (≈ 35–80 МБ на 95 с; crf 17 не нужен).
-- Озвучка пользователя — основа звука. Не обрезать, не менять скорость; длительность = озвучка + короткий хвост. Язык озвучки/субтитров — азербайджанский (если не сказано иное). Текст субтитров = ТОЧНО текст сценария пользователя; распознавание (faster-whisper `medium`, через ffmpeg → float32 16 kHz) даёт только тайминги слов.
-- Музыки нет (если не просили). Звуковое оформление — тихие SFX и фон (см. «Звук»).
+## Format (required, inherited from Disli Hardz)
+- 9:16, 1080×1920, H.264, yuv420p, AAC, 24 fps. Encode the final video with libx264 -preset slow -crf 22 (about 35–80 MB for 95 seconds; CRF 17 is unnecessary).
+- The user's narration is the audio source. Do not trim it, alter its speed, or replace it; video duration is narration plus a short tail. Narration and subtitles are in Azerbaijani unless the user says otherwise. Subtitle text must exactly match the user's script; faster-whisper medium (ffmpeg to float32 16 kHz) supplies word timings only.
 
-## Визуальный стиль: «Тетрадь Кахаля» — оживающая научная гравюра (обязательно)
-Утверждено пользователем (2026-11-09). Это НЕ бумажный коллаж Disli Hardz и НЕ плоский «тёмный нуар» с цветными фигурами (прежняя версия отклонена: стиль был слишком похож на Disli Hardz).
-- **Идея**: весь ролик — страницы старого анатомического атласа / блокнота нейроучёного (Рамон-и-Кахаль): тёмная тушь, штриховка и тонкие линии на состаренном тёмном пергаменте. Нужное изображение ПРОРИСОВЫВАЕТСЯ пером на глазах и заливается свечением. Язык науки и «запретных записей», а не детской иллюстрации.
-- **Материал**: ЛИНИЯ, перекрёстная штриховка (crosshatch), гравюрная насечка, контур слоновой кости; плотность штриховки = светлота объёма. Никаких плоских заливок-фигур и «вырезанной бумаги». Фон — пергамент с пятнами, волокнами, зерном; по краю кадра тонкая двойная рамка листа (как рамка гравюры).
-- **Палитра**: почти чёрный пергамент (`#12100d`, `#1c1712`), тушь слоновой кости (`#e9dfc8`), и на сцену ОДНО цветное пятно-акцент: янтарь `#ffb867` (свет, память), кроваво-красный `#c2414b` (тревога/угроза), бирюзово-голубой `#5fd8ff` (импульсы нейронов, сигналы мозга). Всё остальное — монохром (слоновая кость на чёрном). Для здоровья/ухода акцент мягче: персик `#f2b08a` / мятный `#7fe0c3` на коже/слое. Без радуги.
-- **Люди**: анатомические фигуры в гравюрной манере (écorché: видны мышцы/сосуды/скелет там, где это объясняет мысль), профили голов в разрезе, силуэты без лица, но с шеей, плечами, кистями, ногами, одеждой в штриховке. Одежда/причёска одинаковы во всех сценах. Анатомия правдоподобна, руки двухзвенные (IK), без вывернутых конечностей, парения и проваливания сквозь предметы.
-- **Движение**: линии прорисовываются, штриховка нарастает, нейроны «вырастают» и по ним бежит импульс, страница перелистывается/проявляется; камера медленно плывёт, 3+ плана (параллакс), частицы-«пыль»/импульсы. Появление каждой сцены — «прорисовка» перьевыми штрихами слева направо.
-- **Подписи/текст в кадре**: тонкие рукописные пометки на полях и подписи органов ТОЛЬКО когда названы в речи; крупная типографика-акцент только на произнесённое слово. Без случайного текста.
-- **Метафоры**: нейрон и синапс, срез мозга, область мозга с подсветкой, анатомический разрез, марионетка и нити, маска, зеркало, лабиринт, часы/шестерни, весы, дверь/замок, ловушка — но всегда в гравюрной манере.
-- **Свет**: единственный источник свечения — акцент сцены (glow); виньетка, лёгкое зерно, пятна старения бумаги. Каждая смысловая фраза — своя метафора/среда; не повторять фон без причины; пустые или однотонные кадры — дефект.
-- Образцы качества проработки (композиция, детальность, чистота): 2D-проекты из папки `youtube-video\2d-video\projects` (3D-проекты НЕ образец). Стиль здесь другой, планка качества та же. Дизайн/концепцию ролика ассистент придумывает сам ДО кода, но в рамках этого стиля.
+## Visual style: “Kahlo's Notebook” — an animated scientific engraving
+Approved by the user on 2026-11-09. This is not Disli Hardz paper collage and not a flat “dark noir” look with colored figures (the previous version was rejected for looking too much like Disli Hardz).
+- Concept: the video feels like pages from an old anatomy atlas or neuroscientist's notebook (Ramon y Cajal): dark ink, hatching, fine lines on aged dark parchment. Draw the image in with a pen before the viewer's eyes and illuminate it. Use the language of science and “forbidden notes,” not children's illustration.
+- Materials: linework, cross-hatching, engraved cuts, ivory contours; hatching density controls volume and light. No flat character fills or cut-paper look. Background: parchment with stains, fibers, and grain; add a thin double-page border around the frame.
+- Palette: nearly black parchment (#12100d, #1c1712), ivory ink (#e9dfc8), plus one colored accent per scene: amber #ffb867 (light, memory), blood red #c2414b (anxiety/threat), or turquoise blue #5fd8ff (neuron impulses, brain signals). Everything else is monochrome. For health/body-care topics, use softer peach #f2b08a or mint #7fe0c3 on skin/layers. No rainbow palettes.
+- People: anatomical figures in engraving style (écorché: show muscles/vessels/skeleton only where they explain the point), head-profile cross-sections, or faceless silhouettes with neck, shoulders, hands, legs, and hatched clothing. Keep clothing and hairstyle consistent across scenes. Anatomy must be plausible; arms use two segments (IK); no twisted limbs, floating, or clipping through objects.
+- Motion: draw lines in; let hatching build up; let neurons grow with impulses traveling along them; turn or reveal pages. The camera drifts slowly across 3+ parallax planes with dust/impulse particles. Reveal each scene with left-to-right pen strokes.
+- Labels/on-screen text: fine handwritten margin notes and organ labels only when spoken. Large accent typography only for a spoken word. No random text.
+- Metaphors: neuron and synapse, brain cross-section, highlighted brain region, anatomical cutaway, puppet and strings, mask, mirror, maze, clock/gears, scales, door/lock, trap — always rendered as engravings.
+- Lighting: the scene accent is the only glow source. Use vignette, light grain, and aged-paper stains. Each meaningful phrase gets its own metaphor/setting; do not repeat backgrounds without a reason. Blank or monochrome frames are defects.
+- Quality references (composition, detail, cleanliness): 2D projects under youtube-video/2d-video/projects (3D projects are not references). The style differs, but the quality bar is the same. Devise the video design/concept before coding, within these rules.
 
-## Субтитры (обязательно, вшиты, как в Disli Hardz)
-- Караоке по словам, шрифт **Arial 700, 52 px** (при 1080×1920), **не более 3 слов в группе**, ширина группы ≤ 820 px.
-- Плашка: rgba(18,22,28,0.5), радиус 13, отступ ≈ 17 px. Слова `#f7f2e6`, **активное (произносимое) слово — карамельно-коричневый `#c98b5a`** (решение пользователя; НЕ голубой, НЕ жёлтый — жёлтый у Disli Hardz). Без теней. Если коричневый плохо читается на конкретном тёмном кадре — осветлять не больше чем до `#d9a06a`, но оставаться в коричневой гамме.
-- Положение: центр плашки **y≈1540 из 1920** (не выше 1500, не ниже 1600 — интерфейс TikTok).
-- Тайминги по словам; границы сверять с речью (повторное распознавание/энергия); расхождения речи со сценарием фиксировать и сообщать.
+## Subtitles (required, burned in; inherited from Disli Hardz)
+- Word-by-word karaoke, Arial 700, 52 px at 1080×1920, no more than 3 words per group, group width ≤ 820 px.
+- Panel: rgba(18,22,28,0.5), radius 13, padding about 17 px. Words are #f7f2e6; the active spoken word is caramel brown #c98b5a (user decision; not blue or yellow — Disli Hardz uses yellow). No shadows. If brown lacks contrast on a dark frame, lighten only up to #d9a06a, staying within brown.
+- Position: panel center at y≈1540 of 1920 (not above 1500 or below 1600, due to TikTok UI).
+- Use word timings; compare boundaries with speech (re-transcription/energy). Log and report discrepancies between speech and script.
 
-## Звук (обязательно)
-- Только речь + тихие SFX и фон. Пик SFX ≤ 0.20 (при пике речи ≈ 1.0), фон ещё тише; SFX приглушаются под речью (~−45% во время слов). Звук перехода между сценами НЕ добавлять.
-- Подбирать РАЗНЫЕ звуки под действие, не повторять один и тот же. Для этого канала:
-  - фон: низкий дрон/гул (sub-bass), тихое электрическое жужжание, слабый ветер, редкий тик часов, далёкая капля; в сценах напряжения — тихий пульс/сердцебиение; в спокойных — дыхание/мягкий воздух;
-  - нейро-сцены: короткие электрические «тики/искры» при импульсах нейронов, мягкие синтетические «пинги», «щелчок» при подсвечивании области мозга;
-  - психология/манипуляция: скрип нитей марионетки, глухой стук, металлический замок, шорох ткани, тихий «шёпот»-воздух (без слов), стеклянный звон трещины;
-  - здоровье/уход: вода/капля, мягкий выдох, шорох ткани, лёгкий «sparkle» на чистой коже;
-  - акценты текста: короткие тихие «поп/блип» разной высоты.
-  Без музыки и без громких стингеров.
+## Audio (required)
+- Speech plus quiet SFX and ambience only. SFX peak ≤ 0.20 (speech peak ≈1.0); ambience quieter still. Duck SFX under speech by about 45%. Do not add transition sounds.
+- Choose distinct sounds appropriate to the action; do not reuse the same sound. Suggestions: ambience: low drone/hum (sub-bass), quiet electrical buzz, faint wind, occasional clock tick or distant drip; tense scenes: soft pulse/heartbeat; calm scenes: breathing/soft air.
+- Neuroscience: short electrical ticks/sparks for neuron impulses, soft synthetic pings, a quiet click when a brain region lights up.
+- Psychology/manipulation: puppet-string creak, dull knock, metal lock, fabric rustle, wordless airy whisper, glass-crack chime.
+- Health/body care: water/drop, soft exhale, fabric rustle, light sparkle on clean skin.
+- Text accents: short quiet pops/blips at varying pitches. No music or loud stingers.
 
-## Переходы
-- Не злоупотреблять анимацией перехода: в основном резкая склейка по речи; эффектный переход (например «прорисовка» страницы пером, вспышка акцента, проявление из тьмы) — только на крупных сменах темы (интро→тема, тема→вывод, финал/призыв). Никаких «шаров/кругов» и частых wipe.
+## Transitions
+Do not overuse transition animation. Mostly cut on speech. Use a stylized transition (pen-drawing a page, accent flash, or reveal from darkness) only for major topic changes (intro to topic, topic to conclusion, ending/call to action). No circles/balls and no frequent wipes.
 
-## Ролики: сценарий → видео
-1. Прочитай сценарий, определи идею, 3–5 ключевых образов и акцентный цвет.
-2. Транскрипция + разметка слов сценария; STORYBOARD.md (таймкод → фраза → метафора/сцена → камера).
-3. Сборка HTML/Canvas (кадр = функция времени, статичные слои кешируются), рендер в 4 процесса, SFX через `sfx_base.py`, ffmpeg.
-4. Если пользователь присылает новую озвучку того же ролика — НЕ переписывать видео: выровнять слова, получить якоря (`align_script.py`), подогнать сцены через warp времени, переписать только изменившиеся места.
+## From script to video
+1. Read the script; identify the idea, 3–5 key images, and accent color.
+2. Transcribe and align script words; create STORYBOARD.md (timecode → phrase → metaphor/scene → camera).
+3. Build HTML/Canvas (each frame is a function of time; cache static layers), render with 4 processes, add SFX through sfx_base.py, and use ffmpeg.
+4. If the user supplies replacement narration for the same video, do not rewrite the video. Re-align words, create anchors with align_script.py, warp scene timing, and rewrite only changed portions.
 
-## Выдача пользователю вместе с готовым видео (обязательно, на азербайджанском языке)
-В финальном ответе после сдачи видео (технический отчёт — на русском) ВСЕГДА давать, на азербайджанском:
-1. **Başlıq** — название ролика: короткое, цепляющее, по теме, без ложного кликбейта.
-2. **Örtük üçün prompt** — промпт для генерации обложки (9:16) в ТОМ ЖЕ стиле, что и видео (палитра, свет, атмосфера, метафоры ролика), с короткими словами/фразой по теме видео. ТЕКСТ НА ОБЛОЖКЕ: расположен НИЖЕ СЕРЕДИНЫ кадра (примерно 55–75% высоты; не наверху и не в самом низу, где интерфейс), набран КРАСИВОЙ выразительной авторской типографикой (декоративные буквы в стиле ролика: объёмные/светящиеся/вырезанные из бумаги/рукописная каллиграфия и т. п., с контуром, тенью или свечением, хорошей читаемостью), а НЕ обычным системным шрифтом. В промпте явно указать: какой текст, где (ниже середины), каким шрифтом/эффектом.
-3. **Təsvir** — описание: 2–4 предложения по сути видео + ровно **5 хэштегов**.
-Ничего лишнего в этот блок не добавлять.
+## Delivery text accompanying a finished video (required, in Azerbaijani)
+In the final response after delivering a video (technical report may be in Russian), always include in Azerbaijani:
+1. Başlıq — short, engaging, on-topic title without misleading clickbait.
+2. Örtük üçün prompt — a prompt for a 9:16 cover in the same style as the video (palette, lighting, atmosphere, metaphors), with a short topical phrase. Cover text must sit below the middle of the frame (about 55–75% of its height, neither near the top nor in the UI area at the bottom) and use expressive custom typography matching the video (decorative, dimensional/glowing/cut-paper/handwritten calligraphy, with outline, shadow, or glow and strong readability), not a standard system font. State the exact text, placement below the middle, and typography/effect in the prompt.
+3. Təsvir — 2–4 sentences describing the video plus exactly 5 hashtags.
+Do not add anything else to this block.
 
-## Отправка в Telegram (обязательно после сдачи видео, для ВСЕХ каналов)
-Пользователь сам закидывает результат в свой Telegram для публикации. Постоянное разрешение пользователя (2026-11-09): после того как видео принято и проверено, ассистент САМ отправляет в Telegram пользователя: (1) готовый MP4 (`python tools\send_telegram.py --video <путь>`), (2) текст на азербайджанском: Başlıq, Örtük üçün prompt, Təsvir (+5 хэштегов) — одним UTF-8 файлом через `--text`. Настройка: `telegram.env` в корне `claude-video` (токен бота и chat id; читает только скрипт).
-- Токен НИКОГДА не выводить, не печатать, не копировать в ответы, логи и файлы проекта; не читать `telegram.env` без необходимости (проверка: `python tools\send_telegram.py --check`).
-- Если `telegram.env` не заполнен (код 2) или файл >50 МБ — не выдумывать обходы: просто сообщить пользователю в ответе (видео и текст всё равно выдаются в чате как обычно) и назвать, что нужно сделать.
-- Отправлять только итоговое принятое видео и текст выдачи; ничего другого, и только в чат из `telegram.env`. Если пользователь в запросе просит НЕ отправлять — не отправлять.
+## Telegram delivery (required after acceptance, for all channels)
+Standing user authorization (2026-11-09): once the video is accepted and reviewed, the assistant sends to the user's Telegram: (1) final MP4 using python tools/send_telegram.py --video <path>, and (2) Azerbaijani text with Başlıq, Örtük üçün prompt, and Təsvir (+5 hashtags), as one UTF-8 file via --text. Configuration is telegram.env at the claude-video root (bot token and chat ID; only the script reads it).
+- Never display, print, copy into responses/logs/project files, or otherwise expose the token. Do not read telegram.env unless needed; check with python tools/send_telegram.py --check.
+- If telegram.env is unconfigured (exit code 2) or the file exceeds 50 MB, do not invent a workaround. Tell the user what needs to be done; still provide the video and text in chat as usual.
+- Send only the accepted final video and delivery text, and only to the chat configured in telegram.env. If the user explicitly asks not to send, do not send.
 
-## Проверка (обязательно до сдачи)
-Запусти независимых субагентов из `.claude\agents\` (передай пути проекта и проверочных листов из `tools\make_review_sheets.py`): `video-quality-reviewer`, `art-director`, `subtitle-auditor`. Исправь замечания FAIL/MAJOR, повтори проверку затронутого. Проверь финальный MP4: кодек, 1080×1920, 24 fps, число кадров, длительность = озвучка, звук есть, нет «дёргов» (резкие пики разности соседних кадров вне смены субтитров/переходов). В `videos\` оставить только итоговый MP4. Отчёт честный: что проверено глазами/по цифрам, а что нет (движение и звук в реальном времени агент не воспринимает).
+## Review (required before delivery)
+Run independent agents from .claude/agents/ (give them project paths and review sheets from tools/make_review_sheets.py): video-quality-reviewer, art-director, and subtitle-auditor. Fix FAIL/MAJOR findings and repeat review for affected portions. Check the final MP4: codec, 1080×1920, 24 fps, frame count, duration equals narration, audio present, and no unintended jumps (large differences between neighboring frames outside subtitle/transition changes). Leave only the final MP4 in videos/. Report honestly what was reviewed visually/by numbers and what was not (the agent cannot perceive motion or audio in real time).
 
-## Уроки правок пользователя (унаследованы, учитывать сразу)
-- Ходьба: фаза шага = пройденное расстояние, ноги идут в сторону движения, у людей разные скорость/старт/фаза, темп постоянный (≈230 px/с), руки качаются навстречу ногам, герои не слипаются.
-- Предметы стоят на опоре; руки не проваливаются в мебель; подсказки («?», «!») рядом с головой героя; персонаж не исчезает без причины.
-- Сон/лежачие позы читаются сразу (голова, плечи, рука, дыхание).
-- Каждая локация насыщена деталями; пустые фоны — дефект.
-- Названия брендов и терминов брать из сценария.
+## User revision lessons (inherited; apply from the start)
+- Walking: step phase follows distance traveled; legs move in the travel direction; vary speed/start/phase between people; maintain a steady pace (≈230 px/s); arms swing opposite the legs; keep characters separated.
+- Objects rest on surfaces; hands do not pass through furniture; question/exclamation marks sit near the character's head; characters do not disappear without reason.
+- Sleeping/lying poses must read clearly (head, shoulders, arm, breathing).
+- Every location needs meaningful detail; blank backgrounds are defects.
+- Use brand and technical names from the script.
 
-## Нецензурная брань (обязательно)
-- Нецензурная лексика в сценарии УДАЛЯЕТСЯ полностью: фраза переписывается так, чтобы смысл сохранялся без мата. Не заменять ругательство синонимом-«смягчением» и не ставить звёздочки или «пи-пи».
-- Если без брани фраза теряет смысл, сократи её до нейтральной формулировки; проверь, что число и факт не потеряны.
-- Субтитры и озвучка должны совпадать с уже очищенным текстом.
+## Profanity (required)
+- Remove profanity from scripts completely: rewrite the sentence to preserve its meaning without profanity. Do not replace it with a softened synonym, asterisks, or beeps.
+- If a sentence loses meaning without profanity, shorten it to a neutral formulation; preserve relevant numbers and facts.
+- Subtitles and narration must match the cleaned text.
 
-## Окружение
-Windows 11; ffmpeg/ffprobe, Node, Python в PATH; Chrome `C:\Program Files\Google\Chrome\Application\chrome.exe`; `npm i puppeteer-core` в папке проекта; venv с `faster-whisper` во временной папке (при ошибке `av` декодировать аудио через ffmpeg и передавать массив).
+## Environment
+Windows 11; ffmpeg/ffprobe, Node, and Python on PATH; Chrome at C:\Program Files\Google\Chrome\Application\chrome.exe; install puppeteer-core with npm i puppeteer-core in the project folder; keep the faster-whisper virtual environment in a temporary folder (if av fails, decode audio with ffmpeg and pass the array).
