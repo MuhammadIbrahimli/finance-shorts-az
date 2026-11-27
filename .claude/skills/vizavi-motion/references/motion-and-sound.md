@@ -1,38 +1,38 @@
-# Движение, оптика, типографика и звук
+# Motion, Optics, Typography, and Sound
 
-Применяй по выбранной раскадровке. Цель — качество из механики 1 ядра, а не одновременная демонстрация всех средств.
+Apply these techniques according to the chosen storyboard. The goal is the quality described by core mechanic 1, not simultaneous use of every technique.
 
-## Камера и глубина
+## Camera and depth
 
-Разделяй путь, скорость, ориентацию, цель, FOV и фокус. Проектируй длинную связную траекторию с волнами скорости; не склеивай одинаковые ease-in-out с нулевой скоростью на каждом акценте. На стыках проверяй позицию, направление, экранную скорость и ускорение. В читаемой фазе активной сцены большой проезд переходит в спокойную дугу/дрейф. Сопровождение героя совместимо с заметным параллаксом окружения. Осмысленный монтажный cut не требует непрерывной мировой координаты между разными локациями.
+Separate trajectory, speed, orientation, target, FOV, and focus. Design one long, coherent trajectory with speed waves; do not concatenate identical ease-in-out moves that stop at zero on every accent. At transitions, check position, direction, screen-space speed, and acceleration. During readable parts of an active scene, a large move should settle into a calm arc/drift. Character tracking can coexist with visible environmental parallax. A motivated editorial cut does not need continuous world coordinates between different locations.
 
-Передний, средний и задний планы различаются масштабом, относительным движением, перекрытиями и перспективой. Защищай силуэт и текст от случайного перекрытия. Плашку рядом с движущимся 3D-объектом привязывай к проекции его якоря, сохраняй поля кадра без дрожания и запаздывания.
+Separate foreground, middle, and background by scale, relative motion, overlap, and perspective. Protect silhouettes and text from accidental occlusion. Attach a label near a moving 3D object to the projection of its anchor, preserving frame margins without jitter or lag.
 
-## Оптика и материал
+## Optics and materials
 
-- Motion blur отражает относительное экранное движение за экспозицию. У сопровождаемого резкого героя может смазываться фон. Субкадровая выборка или подходящий renderer — средства, не доказательство эффекта. На торможении смаз ослабевает.
-- DOF выделяет выбранную глубину. Фокус при приближении следует смысловой детали без случайного расфокуса. Ближний и дальний слои могут уходить из резкости; текст и герой остаются узнаваемыми. В плоском UI не создавай искусственную нечитаемость ради галочки.
-- Радиальный/zoom blur — отдельный стилизованный акцент, уместный для глубины или быстрых карточек. Не выдавай его за глубину резкости или временной смаз. Не накладывай максимальное размытие на весь ролик.
-- Форма читается геометрией, светом, нормалями, толщиной, контактной тенью и перекрытиями. Блик, зерно и частицы не исправляют неверную конструкцию. Текстура и тень должны следовать объекту и свету.
+- Motion blur reflects relative screen movement over exposure. A tracked sharp character may have a blurred background. Subframe sampling or a suitable renderer are tools, not proof of the effect. Blur should ease during deceleration.
+- Depth of field highlights a chosen depth. During a push-in, focus should follow the meaningful detail without accidental defocus. Near/far layers may soften while text and character remain recognizable. Do not create artificial illegibility in flat UI just to check a box.
+- Radial/zoom blur is a separate stylistic accent, useful for depth or fast cards. Do not call it depth of field or temporal motion blur. Do not apply maximum blur throughout the video.
+- Shape is communicated through geometry, lighting, normals, thickness, contact shadows, and occlusion. Highlights, grain, and particles do not fix incorrect construction. Texture and shadows should follow the object and light.
 
-## Типографика и ритм
+## Typography and rhythm
 
-Подбери выразительную доступную гарнитуру или согласованную пару; проверь конкретные глифы, кириллицу, вес, переносы и допустимость использования файла. При запрете внешних шрифтов используй разрешённые системные или авторскую геометрию. Сначала спроектируй читаемую финальную раскладку, затем действие букв/слов: сборка, изменение ширины, маски, пространственные отношения, взаимодействие с объектом. Эффект должен иметь смысловую роль.
+Choose an expressive available font or a consistent pair; check specific glyphs, Cyrillic, weight, line breaks, and whether the font file may be used. If external fonts are disallowed, use permitted system fonts or custom geometry. First design a readable final layout, then animate letters/words: assembly, width changes, masks, spatial relationships, interaction with objects. The effect should serve a semantic purpose.
 
-Сочетай подготовку, действие, контакт, реакцию и затухание с разными массами и кривыми. Один главный акцент допускает согласованные вторичные слои. Если всё спорит за внимание, меняй фазу, масштаб, глубину и контраст. Не спасай темп удалением обязательных элементов или ускорением до нечитаемости. Избегай повторяющихся вспышек как замены энергии.
+Combine anticipation, action, contact, reaction, and decay with varied masses and curves. One main accent can have coherent secondary layers. If everything competes for attention, adjust phase, scale, depth, and contrast. Do not fix pacing by deleting required content or speeding it until unreadable. Avoid repeated flashes as a substitute for energy.
 
-## Музыка и звуковой дизайн
+## Music and sound design
 
-Если пользователь не задал silent-режим, музыка и SFX входят в постановку с начала. Выбирай способ получения по разрешённым средствам и задаче: важны музыкальный характер и результат, а не конкретный сервис или синтезатор. У музыки должны быть подходящие мотив/грув, развитие, контраст и завершение; набор whoosh и ударов не заменяет композицию. SFX связывай с движением, контактом, материалом и переходами, а не добавляй случайно.
+Unless the user chooses silent mode, music and SFX are part of production from the start. Choose a creation method according to permitted resources and the task: musical character and result matter, not a particular service or synthesizer. Music should have a suitable motif/groove, development, contrast, and ending; a collection of whooshes and hits is not a composition. Tie SFX to motion, contact, material, and transitions instead of adding them randomly.
 
-Веди звук и изображение по одним событиям. После speed ramp пересчитай фактический момент акцента; не меняй непреднамеренно весь музыкальный темп/высоту. Слушай полный микс и нужные слои; проверь баланс, клиппинг, щелчки, синхронность и хвост. Технические метрики не доказывают музыкальное качество. Если аудио не создано или не прослушано, явно различай эти статусы.
+Drive sound and picture from the same events. After a speed ramp, recalculate the actual accent time; do not unintentionally change the entire music tempo/pitch. Listen to the complete mix and necessary layers; check balance, clipping, clicks, sync, and tail. Technical metrics do not prove musical quality. If audio was not created or heard, state those statuses separately.
 
-### Монтаж по выразительным акцентам
+### Editing to expressive accents
 
-Учитывай музыкальные точки уже при планировании звука и анимации: выделенная нота, удар, смена фразы или гармонии, пауза либо возвращение ритма могут поддержать склейку, раскрытие сцены, смену ракурса, контакт или завершение движения. Это периодический осмысленный приём, не требование монтировать на каждый бит. Фортепианная нота — возможный пример акцента, а не обязательный инструмент или жанр.
+Plan around musical accents while designing sound and animation: a highlighted note, impact, phrase/harmony change, pause, or returning rhythm may support a cut, scene reveal, angle change, contact, or movement ending. This is an occasional deliberate technique, not a requirement to cut on every beat. A piano note is only an example, not a required instrument or genre.
 
-После выбора/создания **фактической аудиодорожки** отметь таймкоды заметных акцентов и соответствующих визуальных событий. Для выбранных точек зафиксируй воспринимаемый пик/начало акцента, цель визуального действия и ближайший подходящий кадр: `frame / fps`. Учитывай реальный audio start/offset и монтажные сдвиги. Одинакового BPM, расчётной сетки или начала файла звукового эффекта недостаточно: музыкальный пик, атака и визуальная кульминация могут находиться в другом месте. Сверяй их слухом и в движении с точностью кадров, а не по одному waveform.
+After selecting/creating the **actual audio track**, mark the timecodes of audible accents and corresponding visual events. For selected points, record the perceived peak/accent onset, target visual action, and nearest suitable frame: frame / fps. Account for real audio start/offset and editorial shifts. BPM, a calculated beat grid, or the start of an SFX file is not enough: a musical peak, attack, and visual climax may occur at different times. Compare by listening and watching at frame-level accuracy, not from one waveform.
 
-Если совпадение не работает, мягко скорректируй длительность плана, траекторию, время раскрытия/посадки или аранжировку в пределах брифа. Не создавай неестественную скорость и не порть темп/разборчивость речи ради сетки. Значимые смысловые события, чтение текста, голос и явное отсутствие музыки по брифу важнее механического попадания в бит; при silent-режиме музыкальная привязка не применяется.
+If a sync point does not work, gently adjust shot duration, trajectory, reveal/landing timing, or arrangement within the brief. Do not create unnatural speed or damage pacing/speech clarity to fit a grid. Meaningful events, readable text, voice, and explicit no-music requirements outrank mechanical beat matching; in silent mode, do not apply music sync.
 
-Согласуй SFX с музыкальным жестом: звук может поддержать, дополнить или оставить акценту пространство. Не наслаивай одинаковый whoosh на каждый переход и не дублируй каждый музыкальный удар эффектом. После замены/обрезки дорожки или speed ramp обнови карту акцентов. Проверь выбранные синхроточки и финальный микс вместе с видео; идеальную синхронизацию без такой проверки не заявляй.
+Coordinate SFX with musical gestures: a sound may support the accent, complement it, or leave it space. Do not layer the same whoosh on every transition or duplicate every musical impact with an effect. After replacing/trimming a track or applying a speed ramp, update the accent map. Review chosen sync points and final mix with video; do not claim perfect synchronization without that review.
