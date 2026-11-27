@@ -1,55 +1,53 @@
-# Итерация, проверка и экспорт
+# Iteration, Review, and Export
 
-Это рабочая проверка механики 3, а не сертификат качества по наличию кода.
+This is a working review of core mechanic 3, not a quality certificate based on the existence of code.
 
-## После первой сборки
+## After the first build
 
-Первый результат — внутренний недоработанный черновик. Сделай полный просмотр на обычной скорости, а затем адресный разбор каждой сцены и стыка. При наличии звука прослушай полный микс и необходимые отдельные слои. Запиши существенные замечания в виде: **интервал → наблюдение → причина → конкретная правка → повторная проверка**. Не имитируй доработку ради числа итераций; если дефектов не найдено, зафиксируй, что именно проверено.
+The first result is an unfinished internal draft. Watch the complete video at normal speed, then inspect each scene and transition. If audio is present, listen to the complete mix and relevant individual layers. Record material findings as: **interval → observation → cause → specific fix → recheck**. Do not imitate revisions just to increase the iteration count; if no defects are found, state exactly what was reviewed.
 
-Проверь:
+Check:
+- whether the idea and causal through-line are clear, the character is recognizable, and the piece develops instead of idling;
+- whether camera, shot size, perspective, and layers guide attention; whether motion and transitions feel smooth;
+- whether typography acts meaningfully and required words remain readable;
+- whether shape, lighting, shadows, materials, identity, and contact are preserved, with no artifacts, accidental crops, or layer conflicts;
+- whether blur and focus fit the motion/depth without hiding what matters;
+- whether music and SFX support style, rhythm, and events, with no sync problems, clicks, or cutoffs;
+- whether the format, duration, frame rate, silent/offline mode, and other explicit requirements are met.
 
-- считывается ли идея и причинная нить, узнаваем ли герой, есть ли развитие вместо скучного зависания;
-- направляют ли камера, крупность, перспектива и слои внимание; мягки ли скорости и стыки;
-- выполняет ли типографика действие, читаются ли обязательные слова без паузы;
-- сохранены ли форма, свет, тени, материал, идентичность и контакт; нет ли артефактов, случайных обрезок, конфликтов слоёв;
-- соответствуют ли blur и фокус движению/глубине, не скрывая нужное;
-- поддерживают ли музыка и SFX стиль, ритм и события; нет ли рассинхронизации, щелчков и обрыва;
-- соблюдены ли формат, длительность, fps, silent/offline и другие явные требования.
+Fix material causes, review changed sections with adjacent phases, then watch the complete video again. After simplifying, compare against the brief: “cleaner” is not acceptable if required characters, text, environment, or action disappeared. Finish when mandatory requirements are met and checked, material defects are fixed, and remaining ideas are optional stylistic alternatives.
 
-Исправь существенные причины, пересмотри изменённые места с соседними фазами и повторно весь ролик. После упрощения сравни с брифом: нельзя принять «чище», если исчезли нужные персонажи, текст, окружение или действия. Заверши, когда обязательное выполнено и проверено, существенные дефекты исправлены, а оставшееся — вкусовые альтернативы вне необходимой доработки.
+## Implementation and finished MP4 by default
 
-## Реализация и готовый MP4 по умолчанию
+When HTML/CSS/JavaScript, SVG/Canvas, and a custom controlled timeline can meet the quality bar, prefer that direct approach. Do not require Remotion, Hyperframes, or another framework in advance, and do not install dependencies by template. This is a preference, not a ban: Three.js, Remotion, Lottie, audio libraries, and other suitable tools are allowed when genuinely needed. Choose based on result quality, required capabilities, available environment, and complexity; do not claim vanilla is always better.
 
-Когда задачу можно качественно решить прямым HTML/CSS/JavaScript, SVG/Canvas и собственным управляемым таймлайном, предпочитай этот простой путь. Не требуй Remotion, Hyperframes или другого каркаса заранее и не устанавливай зависимости по шаблону. Это предпочтение, не запрет: Three.js, Remotion, Lottie, аудиобиблиотеки и другие подходящие инструменты допустимы по реальной необходимости. Выбирай по качеству результата, нужным возможностям, доступной среде и стоимости сложности; не обещай, что vanilla всегда лучше.
+Web Audio API is a built-in browser API, not a synonym for an audio.js library. No particular music generator or synthesizer is required: use an appropriate permitted method; use audio libraries only when needed. Do not restructure an existing project or a user-selected stack just to follow this preference.
 
-Web Audio API — встроенный браузерный API, не синоним библиотеки audio.js. Музыкальный генератор или синтезатор не закреплён: используй подходящий разрешённый способ, библиотеки для звука — когда они действительно нужны. Существующий проект и явно выбранный пользователем стек не перестраивай ради этого предпочтения.
+Default deliverable is a finished MP4: **1920×1080, constant 60 fps, H.264, compatible yuv420p**, with **AAC audio** unless the user requested silent. Also preserve editable HTML/JS and other source files. Make 4K on request; explicit size, fps, duration, codec, or silent requirements in the brief override defaults. Do not label a file 4K/60 fps or a finished MP4 if the actual file differs.
 
-Стандартная выдача — завершённый MP4 с видео **1920×1080, ровными 60 fps, H.264 и совместимым yuv420p**, со звуком **AAC**, если пользователь не запросил silent. HTML/JS и остальные редактируемые исходники сохраняй как дополнительный результат. 4K делай по запросу; явные размер, fps, длительность, кодек или отсутствие звука из брифа имеют приоритет. Не называй файл 4K/60 fps или готовым MP4, если фактический файл другой.
+Reliable export without a mandatory framework:
+1. Fix the controllable timeline and frame grid. Render **all** frames reproducibly at times i / fps, including complex motion and transitions; verify sequence completeness and order. With another engine, provide equivalent reproducibility instead of recording realtime playback with dropped frames.
+2. Create and mix music, SFX, and speech when present into an actual exportable audio track. Align starts, offsets, accents, and endings to the shared timeline. A Web Audio realtime preview does not guarantee audio in the MP4: produce a usable audio file/buffer with an available offline render, recording, or equivalent reliable method, then inspect its contents.
+3. Combine the frames and complete audio mix with FFmpeg or an equally reliable pipeline. Preserve requested frame rate and timing. When muxing, explicitly include the intended video and audio streams; do not lose speech, music, or SFX or replace the full mix with a single effect. Do not add audio to a silent export.
+4. Align opening and ending tails to the brief before muxing. Do not cut off the final scene, speech, or music ending just to force equal stream durations, or extend the video with a random audio tail. Do not apply -shortest blindly if the shorter stream will cut off the intended ending.
+5. Check the **finished decoded MP4**: actual codec/pixel format, resolution, constant frame rate and timestamps, frame count and exact duration, AAC/required audio, AV sync, opening, ending, and scene boundaries. Watch and listen to the final mix with the video; the source preview does not prove audio exported successfully.
 
-Надёжный путь экспорта без обязательного каркаса:
+If the environment truly cannot render, encode/use FFmpeg or an equivalent, or deliver the file, state the specific blocker, completed work, and actual format. Preserve and provide source files and available playback/export instructions; do not present HTML as a finished video. This is an exception for a confirmed limitation, not a normal shortcut around the required MP4. Do not install an unavailable framework automatically to bypass a limitation.
 
-1. Зафиксируй управляемое время и кадровую сетку. Воспроизводимо отрендери **все** кадры по времени `i / fps`, включая сложные фазы и переходы; проверь полноту и порядок последовательности. Если используется иной движок, обеспечь ту же воспроизводимость, а не запись случайного realtime playback с пропусками.
-2. Подготовь и сведи музыку, SFX и речь, когда она есть, в реальную экспортируемую дорожку. Учитывай старт, offsets, акценты и завершение по общему таймлайну. Web Audio real-time preview сам по себе не гарантирует наличие звука в MP4: получи пригодный аудиофайл/буфер через доступный offline render, запись или эквивалентный надёжный способ и проверь его фактическое содержимое.
-3. Собери кадры и полный аудиомикс через FFmpeg в MP4 либо используй эквивалентный надёжный pipeline. Сохраняй заданную кадровую частоту и хронометраж. При mux явно учитывай нужные видео- и аудиопотоки: не потеряй речь, музыку или SFX и не подмени полный микс одним эффектом. При silent не добавляй звук самовольно.
-4. Согласуй начало и финальные хвосты с брифом до mux. Не обрезай последнюю сцену, речь или завершение музыки ради механического сведения длительностей и не удлиняй ролик случайным аудиохвостом. Не применяй `-shortest` вслепую, если более короткий поток обрежет предусмотренный финал.
-5. Проверь **готовый декодированный MP4**: реальный codec/pixel format, разрешение, ровный fps и timestamps, число кадров и точную длительность, AAC/наличие нужного аудио, AV sync, начало, конец и границы сцен. Просмотри и прослушай финальный микс вместе с видео; исходный preview не доказывает успешный экспорт аудио.
+## Review the deliverable
 
-Если среда реально не позволяет рендер, кодирование/FFmpeg или эквивалент, либо выдачу файла, сообщи конкретный блокер, выполненные части и фактический формат. Сохрани и отдай исходники и доступную инструкцию воспроизведения/экспорта; не выдавай HTML за готовое видео. Это исключение по подтверждённой недоступности, а не обычный shortcut вместо обязательного MP4. Не устанавливай недоступный каркас автоматически для обхода ограничения.
+After encoding, open and decode the final export; review its motion and sound, not just HTML or source PNG/WAV files. Check opening/ending, neighboring frames on both sides of each scene boundary, readable holds, and fastest motion. Contact sheets help evaluate composition, dense frame sequences help assess a cut, full playback helps assess rhythm and smoothness, and listening helps assess sound. These types of evidence are not interchangeable.
 
-## Проверяй доставляемый результат
+If music sync is used, compare selected transitions/actions with perceived accents in the **actual track** and decoded export frames, including audio offset after mux. Watch and listen at speed, then review the complete mix with video: check for offset, repetitive SFX, and loss of meaning/readability/speech to hit the beat. Numeric marker alignment does not prove ideal sync; if playback/listening is unavailable, leave this item unchecked.
 
-После кодирования открой и декодируй финальный экспорт, проверь его движение и звук, а не только HTML или исходные PNG/WAV. Проверь начало/конец, соседние кадры до и после каждой границы сцены, читаемые удержания и самые быстрые фазы. Контактный лист помогает оценивать композиции, плотная последовательность — конкретный стык, полный playback — ритм и плавность, прослушивание — звук. Эти доказательства не взаимозаменяемы.
+At a constant 20 seconds and 60 fps, expect 1200 frames on the grid 0..1199/60; renderAt(20) is not an additional video frame. Twenty seconds is only an example, not a required length. The default 60 fps changes when the brief explicitly says otherwise. Distinguish audio-stream presence from audio quality: a silent stream cannot PASS as an audio result, while AAC presence alone does not confirm audible music/speech or balance.
 
-Если использована музыкальная синхронизация, сверяй выбранные переходы/действия с таймкодами воспринимаемых акцентов **реальной дорожки** и кадрами декодированного экспорта, включая audio offset после mux. Посмотри и прослушай их в темпе, затем проверь полный микс вместе с видео: нет ли сдвига, навязчивого повторения SFX или потери смысла/чтения/речи ради бита. Численное совпадение меток не является доказательством идеальной синхронизации; при недоступном просмотре/прослушивании этот пункт остаётся непроверенным.
+For a controlled timeline, repeat a frame after cold seek, reverse seek, and navigation from elsewhere. Analytical state, baking, or deterministic replay is needed for simulations and cumulative effects; a random seed alone is not enough. Compare source and final file hashes when version preservation matters. Do not call previous shortcomings “without the skill” if the skill was applied.
 
-При ровных 20 с и 60 fps ожидаются 1200 кадров на сетке 0..1199/60; endpoint renderAt(20) не является дополнительным видеокадром. 20 секунд здесь — пример подсчёта, не фиксированная длительность всех роликов. Частота 60 fps из default меняется явным брифом. Отдельно различай наличие аудиопотока и качество звука: немой поток не получает PASS как звуковой результат, а наличие AAC само по себе не подтверждает слышимую музыку/речь и их баланс.
+## Honest statuses
 
-Для управляемого таймлайна повтори кадр после cold seek, перемотки назад и перехода из другого места. Аналитическое состояние, bake или воспроизводимый replay нужны для симуляций и накопительных эффектов; одного случайного seed недостаточно. Сравни исходник и конечный файл по хешам, если требуется сохранить версию. Не называй прежнюю недоработку «без skill», если skill применялся.
+Distinguish: **implemented**, **run and checked**, **visible in frames**, **checked in motion**, **listened to**. Parameters or general impression do not give PASS to an unchecked item. If a tool is unavailable, name the specific unchecked property and why; provide the available artifact with an accurate status, not as if it passed artistic review. Do not invent playback, execution, or skill effectiveness.
 
-## Честные статусы
+If required quality cannot actually be achieved in the available environment, state the exact blocker and completed parts. Do not hide it after claiming completion. If an external action has an uncertain result, determine its outcome before repeating it. Do not ask for new authorization for ordinary reversible work already authorized.
 
-Различай: **реализовано**, **проверено запуском**, **видно в кадрах**, **проверено в движении**, **прослушано**. Непроверенное не получает PASS из параметров или общего впечатления. Если инструмент недоступен, назови конкретную невыполненную проверку и причину; покажи доступный артефакт с соответствующей маркировкой, не выдавая его за прошедший художественную приёмку. Не выдумывай просмотр, запуск или эффективность навыка.
-
-Если обязательное качество реально невозможно выполнить в доступных условиях, сообщи точный блокер и завершённые части. Не скрывай его после заявления о готовности. При неопределённом результате внешнего действия сначала выясни исход, не дублируй запись. Не проси новое разрешение для уже разрешённой обычной обратимой работы.
-
-Не используй повторяющийся строб как замену энергии. Проверяй рискованные яркостные изменения в выходе; reduced-motion и отсутствие ошибок не доказывают формальную flash-безопасность. Не заявляй соответствие стандарту без соответствующего анализа.
+Do not use repeated strobing as a substitute for energy. Check risky brightness changes in the exported video; reduced motion and absence of errors do not prove formal flash safety. Do not claim standards compliance without the relevant analysis.
